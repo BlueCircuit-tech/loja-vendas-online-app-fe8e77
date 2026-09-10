@@ -2223,6 +2223,318 @@ function checkout_confirmar() {
   }
 </script>
 
+    <section data-tela="aprovar-orcamentos" class="hidden">
+      <div class="px-4 pt-4 pb-2 space-y-4">
+        <!-- Header da tela -->
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="font-display text-xl font-bold text-gray-900 leading-tight">Aprovar Orçamentos</h1>
+            <p class="text-sm text-gray-500 mt-0.5">Gerencie solicitações pendentes</p>
+          </div>
+          <button onclick="aprov_orcamentos_abrir_tutorial()" class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 active:scale-90 transition-transform" aria-label="Ajuda">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </button>
+        </div>
+
+        <!-- Cards de indicadores -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
+                <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <span class="text-xs font-medium text-gray-500">Pendentes</span>
+            </div>
+            <p class="font-display text-2xl font-bold text-gray-900" id="indicador-pendentes">5</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              </div>
+              <span class="text-xs font-medium text-gray-500">Aprovados</span>
+            </div>
+            <p class="font-display text-2xl font-bold text-gray-900" id="indicador-aprovados">3</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
+                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <span class="text-xs font-medium text-gray-500">Valor total</span>
+            </div>
+            <p class="font-display text-lg font-bold text-gray-900">R$ 28.4k</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-8 h-8 rounded-lg bg-rose-100 flex items-center justify-center">
+                <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              </div>
+              <span class="text-xs font-medium text-gray-500">Rejeitados</span>
+            </div>
+            <p class="font-display text-2xl font-bold text-gray-900" id="indicador-rejeitados">1</p>
+          </div>
+        </div>
+
+        <!-- Gráfico de orçamentos por semana -->
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <p class="text-xs font-medium text-gray-500 mb-3 uppercase tracking-wide">Solicitações por semana</p>
+          <svg viewBox="0 0 320 100" class="w-full h-24">
+            <defs>
+              <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0d9488" stop-opacity="0.8"/><stop offset="100%" stop-color="#0d9488" stop-opacity="0.2"/></linearGradient>
+            </defs>
+            <line x1="30" y1="5" x2="30" y2="85" stroke="#e5e7eb" stroke-width="1"/>
+            <line x1="30" y1="85" x2="310" y2="85" stroke="#e5e7eb" stroke-width="1"/>
+            <rect x="42" y="55" width="28" height="30" rx="3" fill="url(#barGrad)"/>
+            <rect x="84" y="35" width="28" height="50" rx="3" fill="url(#barGrad)"/>
+            <rect x="126" y="45" width="28" height="40" rx="3" fill="url(#barGrad)"/>
+            <rect x="168" y="20" width="28" height="65" rx="3" fill="url(#barGrad)"/>
+            <rect x="210" y="40" width="28" height="45" rx="3" fill="url(#barGrad)"/>
+            <rect x="252" y="10" width="28" height="75" rx="3" fill="#0d9488"/>
+            <text x="56" y="93" text-anchor="middle" fill="#9ca3af" font-size="9">Seg</text>
+            <text x="98" y="93" text-anchor="middle" fill="#9ca3af" font-size="9">Ter</text>
+            <text x="140" y="93" text-anchor="middle" fill="#9ca3af" font-size="9">Qua</text>
+            <text x="182" y="93" text-anchor="middle" fill="#9ca3af" font-size="9">Qui</text>
+            <text x="224" y="93" text-anchor="middle" fill="#9ca3af" font-size="9">Sex</text>
+            <text x="266" y="93" text-anchor="middle" fill="#0d9488" font-size="9" font-weight="bold">Hoje</text>
+          </svg>
+        </div>
+
+        <!-- Filtros -->
+        <div class="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide" style="scrollbar-width:none">
+          <button onclick="aprov_orcamentos_filtrar('todos')" data-filtro="todos" class="aprov-orc-filtro whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-marca-600 text-white transition-all active:scale-95">Todos</button>
+          <button onclick="aprov_orcamentos_filtrar('pendente')" data-filtro="pendente" class="aprov-orc-filtro whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-600 transition-all active:scale-95">Pendentes</button>
+          <button onclick="aprov_orcamentos_filtrar('aguardando')" data-filtro="aguardando" class="aprov-orc-filtro whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-600 transition-all active:scale-95">Aguardando</button>
+          <button onclick="aprov_orcamentos_filtrar('aprovado')" data-filtro="aprovado" class="aprov-orc-filtro whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-600 transition-all active:scale-95">Aprovados</button>
+          <button onclick="aprov_orcamentos_filtrar('rejeitado')" data-filtro="rejeitado" class="aprov-orc-filtro whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-600 transition-all active:scale-95">Rejeitados</button>
+        </div>
+
+        <!-- Lista de orçamentos -->
+        <div id="lista-orcamentos" class="space-y-3 pb-4">
+          <!-- Cards serão renderizados via JS -->
+        </div>
+
+        <!-- Estado vazio -->
+        <div id="estado-vazio-orc" class="hidden text-center py-10">
+          <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
+            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+          </div>
+          <p class="text-gray-500 text-sm font-medium">Nenhum orçamento encontrado</p>
+          <p class="text-gray-400 text-xs mt-1">Tente outro filtro</p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+    (function(){
+      const orcamentos = [
+        {id:1, cliente:"Construtora Nova Horizonte Ltda", contato:"Ana Beatriz", email:"ana@novahorizonte.com.br", telefone:"(11) 98765-4321", cpfCnpj:"12.345.678/0001-90", endereco:"Av. Paulista, 1500, cj 42 - Bela Vista, São Paulo - SP", data:"2026-01-20", itens:[{nome:"Kit Porta Correr (2un)", qtd:2, valorUnit:2800},{nome:"Fechadura Digital Yale", qtd:4, valorUnit:890},{nome:"Puxador Inox 1m", qtd:6, valorUnit:120}], valorTotal:9820, valorProposto:null, status:"pendente", observacoes:"Urgente para entrega em 15 dias. Orçamento para obra residencial em Moema."},
+        {id:2, cliente:"Clínica Médica São Lucas", contato:"Dr. Roberto", email:"roberto@saolucas.med.br", telefone:"(11) 99876-5432", cpfCnpj:"45.678.901/0002-34", endereco:"Rua Augusta, 890 - Consolação, São Paulo - SP", data:"2026-01-19", itens:[{nome:"Piso Vinílico Premium (caixa)", qtd:30, valorUnit:89.90},{nome:"Rodapé 7cm Branco (barra 2m)", qtd:40, valorUnit:22}], valorTotal:3656, valorProposto:3500, status:"aguardando", observacoes:"Clínica precisa do piso antiderrapante para área de procedimentos."},
+        {id:3, cliente:"Loja de Roupas Estilo & Cia", contato:"Marina Costa", email:"marina@estilocia.com.br", telefone:"(11) 97654-3210", cpfCnpj:"98.765.432/0001-12", endereco:"Rua Oscar Freire, 320 - Jardins, São Paulo - SP", data:"2026-01-18", itens:[{nome:"Iluminação LED Spot Direcionável", qtd:12, valorUnit:145},{nome:"Painel Decorativo 3D", qtd:8, valorUnit:210}], valorTotal:3420, valorProposto:3420, status:"aprovado", observacoes:"Loja nova no shopping, precisa de identidade visual luminotécnica."},
+        {id:4, cliente:"Escritório Advocacia Mendes & Filhos", contato:"Sr. Carlos Mendes", email:"carlos@mendesadv.adv.br", telefone:"(11) 96543-2109", cpfCnpj:"34.567.890/0001-56", endereco:"Alameda Santos, 1200, 10º andar - Jardins, São Paulo - SP", data:"2026-01-18", itens:[{nome:"Cortina Blackout sob medida (m²)", qtd:25, valorUnit:180},{nome:"Persiana Rolô 50mm", qtd:6, valorUnit:320}], valorTotal:6420, valorProposto:null, status:"pendente", observacoes:"Reforma do escritório. Cliente prefere horário fora do expediente para medição."},
+        {id:5, cliente:"Restaurante Sabor Caseiro", contato:"João Pedro", email:"joao@saborcaseiro.com.br", telefone:"(11) 95432-1098", cpfCnpj:"56.789.012/0001-78", endereco:"Rua Haddock Lobo, 450 - Cerqueira César, São Paulo - SP", data:"2026-01-17", itens:[{nome:"Bancada Granito Preto São Gabriel (m²)", qtd:4, valorUnit:1200},{nome:"Torneira de Cozinha Industrial", qtd:2, valorUnit:650},{nome:"Pia Inox Dupla 1,5x0,8m", qtd:1, valorUnit:890}], valorTotal:8390, valorProposto:7900, status:"aguardando", observacoes:"Reforma completa da cozinha. Orçamento inclui instalação."},
+        {id:6, cliente:"Academia FitLife Pinheiros", contato:"Patrícia Lima", email:"patricia@fitlife.com.br", telefone:"(11) 94321-0987", cpfCnpj:"78.901.234/0001-90", endereco:"Rua dos Pinheiros, 700 - Pinheiros, São Paulo - SP", data:"2026-01-16", itens:[{nome:"Espelho 2x1,5m para sala de aula", qtd:8, valorUnit:380},{nome:"Suporte de Anilha de parede", qtd:4, valorUnit:450}], valorTotal:4960, valorProposto:null, status:"rejeitado", observacoes:"Cliente optou por fornecedor com prazo mais curto."},
+        {id:7, cliente:"Padaria Pão Quente", contato:"Sr. Antônio", email:"antonio@paoquente.art.br", telefone:"(11) 93210-9876", cpfCnpj:"23.456.789/0001-45", endereco:"Rua Aspicuelta, 180 - Vila Madalena, São Paulo - SP", data:"2026-01-15", itens:[{nome:"Vitrine Refrigerada 2m", qtd:2, valorUnit:3200},{nome:"Balcão de Atendimento em L", qtd:1, valorUnit:4500},{nome:"Expositor de Pães Rotativo", qtd:1, valorUnit:1800}], valorTotal:12700, valorProposto:null, status:"pendente", observacoes:"Padaria nova. Cliente quer entrega em até 20 dias corridos."},
+        {id:8, cliente:"Hotel Boutique Jardins", contato:"Fernanda Ruiz", email:"fernanda@hoteljardins.com.br", telefone:"(11) 92109-8765", cpfCnpj:"67.890.123/0001-34", endereco:"Alameda Lorena, 250 - Jardins, São Paulo - SP", data:"2026-01-14", itens:[{nome:"Roupão de Banho 400 fios (un)", qtd:60, valorUnit:189.90},{nome:"Toalha de Rosto 500 fios (un)", qtd:60, valorUnit:79.90},{nome:"KitAmenities Sabonete+Creme+Shampoo (cx 50un)", qtd:40, valorUnit:12.50}], valorTotal:17688, valorProposto:16000, status:"aguardando", observacoes:"Reabertura do hotel após reforma. Pedido inclui logotipo bordado nos roupões."}
+      ];
+
+      let filtroAtual = 'todos';
+
+      function getIniciais(nome){
+        const p = nome.split(' ');
+        return (p[0][0] + (p[p.length-1][0])).toUpperCase();
+      }
+      function getCorAvatar(id){
+        const cores = ['bg-teal-600','bg-amber-600','bg-rose-600','bg-indigo-600','bg-emerald-600','bg-orange-600','bg-cyan-600','bg-fuchsia-600'];
+        return cores[(id-1) % cores.length];
+      }
+      function badgeHTML(status){
+        const map = {
+          pendente: '<span class="badge inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Pendente</span>',
+          aprovado: '<span class="badge inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Aprovado</span>',
+          aguardando: '<span class="badge inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>Aguardando cliente</span>',
+          rejeitado: '<span class="badge inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-gray-200 text-gray-600"><span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>Rejeitado</span>'
+        };
+        return map[status] || map.pendente;
+      }
+
+      function renderOrcamentos(){
+        const lista = document.getElementById('lista-orcamentos');
+        const vazio = document.getElementById('estado-vazio-orc');
+        const filtrados = filtroAtual === 'todos' ? orcamentos : orcamentos.filter(o => o.status === filtroAtual);
+        lista.innerHTML = '';
+        if(filtrados.length === 0){
+          lista.classList.add('hidden');
+          vazio.classList.remove('hidden');
+          return;
+        }
+        lista.classList.remove('hidden');
+        vazio.classList.add('hidden');
+        filtrados.forEach((o, idx) => {
+          const el = document.createElement('div');
+          el.className = 'card bg-white rounded-xl p-4 shadow-sm border border-gray-100 active:scale-[0.98] transition-all cursor-pointer';
+          el.style.animationDelay = idx * 50 + 'ms';
+          el.onclick = () => aprov_orcamentos_abrir_detalhe(o.id);
+          el.innerHTML = `
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-full ${getCorAvatar(o.id)} flex items-center justify-center text-white font-bold text-sm flex-shrink-0">${getIniciais(o.contato)}</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2">
+                  <p class="font-display font-semibold text-sm text-gray-900 truncate">${o.cliente}</p>
+                  ${badgeHTML(o.status)}
+                </div>
+                <p class="text-xs text-gray-400 mt-0.5">${o.contato} · ${dataBR(o.data)}</p>
+                <p class="text-xs text-gray-500 mt-1 truncate">${o.itens.length} ${o.itens.length === 1 ? 'item' : 'itens'} · ${o.itens.map(i => i.nome).join(', ')}</p>
+                <div class="flex items-center justify-between mt-2.5 pt-2 border-t border-gray-50">
+                  <span class="text-xs text-gray-500">Valor total</span>
+                  <span class="font-display font-bold text-marca-700">${brl(o.valorTotal)}</span>
+                </div>
+              </div>
+            </div>`;
+          lista.appendChild(el);
+        });
+      }
+
+      window.aprov_orcamentos_filtrar = function(f){
+        filtroAtual = f;
+        document.querySelectorAll('.aprov-orc-filtro').forEach(btn => {
+          if(btn.dataset.filtro === f){
+            btn.className = 'aprov-orc-filtro whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-marca-600 text-white transition-all active:scale-95 shadow-sm';
+          } else {
+            btn.className = 'aprov-orc-filtro whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-600 transition-all active:scale-95';
+          }
+        });
+        renderOrcamentos();
+      };
+
+      window.aprov_orcamentos_abrir_detalhe = function(id){
+        const o = orcamentos.find(x => x.id === id);
+        if(!o) return;
+        const isPendente = o.status === 'pendente';
+        const isAguardando = o.status === 'aguardando';
+        const isAprovado = o.status === 'aprovado';
+        const isRejeitado = o.status === 'rejeitado';
+        const itensLista = o.itens.map(i => `<div class="flex justify-between text-sm py-1.5 border-b border-gray-100 last:border-0"><span class="text-gray-700">${i.nome} <span class="text-gray-400">x${i.qtd}</span></span><span class="text-gray-600 font-medium">${brl(i.valorUnit * i.qtd)}</span></div>`).join('');
+        const html = `
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full ${getCorAvatar(o.id)} flex items-center justify-center text-white font-bold text-lg">${getIniciais(o.contato)}</div>
+              <div>
+                <p class="font-display font-bold text-gray-900">${o.cliente}</p>
+                <p class="text-gray-500">${o.contato}</p>
+              </div>
+              ${badgeHTML(o.status)}
+            </div>
+            <div class="bg-gray-50 rounded-lg p-3 space-y-1.5">
+              <p class="text-xs text-gray-500 flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>${o.email}</p>
+              <p class="text-xs text-gray-500 flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>${o.telefone}</p>
+              <p class="text-xs text-gray-500 flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>${o.endereco}</p>
+              <p class="text-xs text-gray-500 flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V4a2 2 0 012-2h2a2 2 0 012 2v2m-6 0h6"/></svg>CNPJ: ${o.cpfCnpj}</p>
+            </div>
+            <div>
+              <p class="font-medium text-gray-800 mb-1.5">Itens solicitados</p>
+              <div class="bg-white rounded-lg border border-gray-200 p-3">${itensLista}</div>
+              <div class="flex justify-between mt-2 text-sm font-semibold">
+                <span class="text-gray-700">Total estimado</span>
+                <span class="text-gray-900">${brl(o.valorTotal)}</span>
+              </div>
+            </div>
+            ${o.observacoes ? `<div><p class="font-medium text-gray-800 mb-1">Observações do cliente</p><p class="text-gray-600 bg-amber-50 rounded-lg p-3 text-xs italic">"${o.observacoes}"</p></div>` : ''}
+            ${isAguardando || isAprovado ? `<div>
+              <p class="font-medium text-gray-800 mb-1.5">Valor final proposto</p>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">R$</span>
+                <input type="text" id="modal-valor-proposto-${o.id}" value="${o.valorProposto ? brl(o.valorProposto) : brl(o.valorTotal)}" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent" oninput="aprov_orcamentos_mascara_valor(this)">
+              </div>
+            </div>` : ''}
+            <div class="flex gap-2 pt-2">
+              ${isPendente ? `<button onclick="aprov_orcamentos_aprovar(${o.id})" class="flex-1 py-3 rounded-xl bg-emerald-600 text-white font-semibold text-sm active:scale-95 transition-transform shadow-sm">Aprovar</button>` : ''}
+              ${isPendente ? `<button onclick="aprov_orcamentos_rejeitar(${o.id})" class="flex-1 py-3 rounded-xl bg-rose-600 text-white font-semibold text-sm active:scale-95 transition-transform shadow-sm">Rejeitar</button>` : ''}
+              ${isAguardando ? `<button onclick="aprov_orcamentos_reenviar(${o.id})" class="flex-1 py-3 rounded-xl bg-marca-600 text-white font-semibold text-sm active:scale-95 transition-transform shadow-sm">Reenviar Proposta</button>` : ''}
+              ${isAprovado ? `<button onclick="aprov_orcamentos_reenviar(${o.id})" class="flex-1 py-3 rounded-xl bg-marca-600 text-white font-semibold text-sm active:scale-95 transition-transform shadow-sm">Reenviar Proposta</button>` : ''}
+              ${isPendente ? `<button onclick="aprov_orcamentos_enviar_proposta(${o.id})" class="flex-1 py-3 rounded-xl bg-marca-600 text-white font-semibold text-sm active:scale-95 transition-transform shadow-sm">Enviar Proposta</button>` : ''}
+              ${isAguardando || isAprovado ? `<button onclick="fecharModal()" class="flex-1 py-3 rounded-xl bg-gray-100 text-gray-700 font-semibold text-sm active:scale-95 transition-transform">Fechar</button>` : ''}
+              ${isRejeitado ? `<button onclick="fecharModal()" class="flex-1 py-3 rounded-xl bg-gray-100 text-gray-700 font-semibold text-sm active:scale-95 transition-transform">Fechar</button>` : ''}
+            </div>
+          </div>`;
+        abrirModal(html, 'Detalhes do Orçamento #' + String(o.id).padStart(4,'0'));
+      };
+
+      window.aprov_orcamentos_aprovar = function(id){
+        const o = orcamentos.find(x => x.id === id);
+        if(!o) return;
+        o.status = 'aguardando';
+        o.valorProposto = o.valorTotal;
+        fecharModal();
+        atualizarIndicadores();
+        renderOrcamentos();
+        toast('Orçamento aprovado! Proposta enviada para ' + o.cliente, 'ok');
+      };
+
+      window.aprov_orcamentos_rejeitar = function(id){
+        const o = orcamentos.find(x => x.id === id);
+        if(!o) return;
+        o.status = 'rejeitado';
+        fecharModal();
+        atualizarIndicadores();
+        renderOrcamentos();
+        toast('Orçamento rejeitado.', 'info');
+      };
+
+      window.aprov_orcamentos_enviar_proposta = function(id){
+        const o = orcamentos.find(x => x.id === id);
+        if(!o) return;
+        const input = document.getElementById('modal-valor-proposto-' + id);
+        let valor = o.valorTotal;
+        if(input && input.value){
+          valor = parseFloat(input.value.replace(/[^\d,]/g,'').replace(',','.')) || o.valorTotal;
+        }
+        o.valorProposto = valor;
+        o.status = 'aguardando';
+        fecharModal();
+        atualizarIndicadores();
+        renderOrcamentos();
+        toast('Proposta de ' + brl(valor) + ' enviada para ' + o.contato + '!', 'ok');
+      };
+
+      window.aprov_orcamentos_reenviar = function(id){
+        const o = orcamentos.find(x => x.id === id);
+        if(!o) return;
+        const input = document.getElementById('modal-valor-proposto-' + id);
+        if(input && input.value){
+          o.valorProposto = parseFloat(input.value.replace(/[^\d,]/g,'').replace(',','.')) || o.valorProposto;
+        }
+        fecharModal();
+        toast('Proposta reenviada para ' + o.contato + '!', 'ok');
+      };
+
+      window.aprov_orcamentos_mascara_valor = function(el){
+        let v = el.value.replace(/\D/g,'');
+        if(v.length === 0) v = '000';
+        v = (parseInt(v)/100).toFixed(2).replace('.',',');
+        const partes = v.split(',');
+        partes[0] = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+        el.value = 'R$ ' + partes.join(',');
+      };
+
+      function atualizarIndicadores(){
+        const p = orcamentos.filter(o => o.status === 'pendente').length;
+        const a = orcamentos.filter(o => o.status === 'aprovado' || o.status === 'aguardando').length;
+        const r = orcamentos.filter(o => o.status === 'rejeitado').length;
+        document.getElementById('indicador-pendentes').textContent = p;
+        document.getElementById('indicador-aprovados').textContent = a;
+        document.getElementById('indicador-rejeitados').textContent = r;
+      }
+
+      window.aprov_orcamentos_abrir_tutorial = function(){
+        const html = `<div class="space-y-3 text-sm text-gray-700"><p class="font-display font-bold text-gray-900 text-base">Como funciona</p><p>1. Clique num orçamento para ver os detalhes completos.</p><p>2. Em orçamentos <strong>pendentes</strong>, você pode aprovar, rejeitar ou enviar uma proposta com valor negociado.</p><p>3. Em orçamentos <strong>aguardando</strong>, reenvie a proposta ou atualize o valor.</p><p>4. Use os filtros para navegar por status.</p><p class="text-xs text-gray-400 mt-2">Última atualização: ${dataBR(orcamentos[0].data)}</p></div>`;
+        abrirModal(html, 'Ajuda - Aprovar Orçamentos');
+      };
+
+      renderOrcamentos();
+    })();
+    </script>
+
     <!-- TELAS -->
     </main>
 
