@@ -178,7 +178,298 @@
 
     <!-- Área de telas -->
     <main class="flex-1 relative overflow-hidden bg-superficie-50" id="conteudo-principal">
-        <!-- TELAS -->
+        <section data-tela="catalogo-de-produtos" class="hidden">
+      <div class="px-4 pt-2 pb-2">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="flex-1 relative">
+            <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <input id="catalogo-de-produtos-busca" type="text" placeholder="Buscar produtos..." class="w-full pl-10 pr-4 py-3 bg-gray-100 rounded-xl text-sm font-body text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-marca-500 focus:bg-white transition-all" oninput="catalogo_de_produtos_filtrar()">
+          </div>
+          <button onclick="catalogo_de_produtos_toggleFiltros()" class="p-3 bg-gray-100 rounded-xl hover:bg-gray-200 active:scale-95 transition-all">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+          </button>
+        </div>
+
+        <div id="catalogo-de-produtos-filtros" class="hidden mb-3 p-3 bg-white rounded-xl border border-gray-200 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold text-gray-600 uppercase tracking-wide">Filtrar por preço</span>
+            <button onclick="catalogo_de_produtos_limparFiltros()" class="text-xs text-marca-600 font-medium hover:text-marca-700">Limpar</button>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="catalogo_de_produtos_filtrarPreco('todos')" class="catalogo-de-produtos-btn-preco flex-1 py-2 text-xs font-medium rounded-lg bg-marca-50 text-marca-700 border border-marca-200 transition-all" data-preco="todos">Todos</button>
+            <button onclick="catalogo_de_produtos_filtrarPreco('menor50')" class="catalogo-de-produtos-btn-preco flex-1 py-2 text-xs font-medium rounded-lg bg-gray-50 text-gray-600 border border-gray-200 transition-all" data-preco="menor50">Até R$ 50</button>
+            <button onclick="catalogo_de_produtos_filtrarPreco('50a200')" class="catalogo-de-produtos-btn-preco flex-1 py-2 text-xs font-medium rounded-lg bg-gray-50 text-gray-600 border border-gray-200 transition-all" data-preco="50a200">R$ 50–200</button>
+            <button onclick="catalogo_de_produtos_filtrarPreco('maior200')" class="catalogo-de-produtos-btn-preco flex-1 py-2 text-xs font-medium rounded-lg bg-gray-50 text-gray-600 border border-gray-200 transition-all" data-preco="maior200">Acima de R$ 200</button>
+          </div>
+        </div>
+
+        <div id="catalogo-de-produtos-categorias" class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4">
+          <button onclick="catalogo_de_produtos_selecionarCategoria(this, 'todos')" class="catalogo-de-produtos-cat-chip flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-marca-600 text-white shadow-md shadow-marca-200 transition-all active:scale-95" data-cat="todos">Todos</button>
+          <button onclick="catalogo_de_produtos_selecionarCategoria(this, 'eletronicos')" class="catalogo-de-produtos-cat-chip flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all active:scale-95" data-cat="eletronicos">Eletrônicos</button>
+          <button onclick="catalogo_de_produtos_selecionarCategoria(this, 'acessorios')" class="catalogo-de-produtos-cat-chip flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all active:scale-95" data-cat="acessorios">Acessórios</button>
+          <button onclick="catalogo_de_produtos_selecionarCategoria(this, 'perifericos')" class="catalogo-de-produtos-cat-chip flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all active:scale-95" data-cat="perifericos">Periféricos</button>
+          <button onclick="catalogo_de_produtos_selecionarCategoria(this, 'smarthome')" class="catalogo-de-produtos-cat-chip flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all active:scale-95" data-cat="smarthome">Smart Home</button>
+        </div>
+      </div>
+
+      <div class="px-4 pb-24">
+        <div id="catalogo-de-produtos-grid" class="grid grid-cols-2 gap-3">
+        </div>
+        <div id="catalogo-de-produtos-vazio" class="hidden py-16 text-center">
+          <svg class="w-16 h-16 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <p class="text-gray-500 text-sm font-body">Nenhum produto encontrado</p>
+          <p class="text-gray-400 text-xs mt-1 font-body">Tente outra busca ou categoria</p>
+        </div>
+      </div>
+
+      <div class="fixed bottom-0 left-0 right-0 z-40">
+        <div class="max-w-[430px] mx-auto px-4 pb-4 pt-2">
+          <button onclick="mostrarTela('carrinho-de-compras')" class="w-full flex items-center justify-between bg-gray-900 text-white rounded-2xl px-5 py-4 shadow-xl shadow-gray-900/20 active:scale-[0.98] transition-all relative overflow-hidden">
+            <div class="flex items-center gap-3">
+              <div class="relative">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+                <span id="catalogo-de-produtos-cart-count" class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+              </div>
+              <div class="text-left">
+                <span class="text-sm font-medium">Ver carrinho</span>
+                <p id="catalogo-de-produtos-cart-total" class="text-xs text-gray-300">R$ 0,00</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <script>
+        var catalogo_de_produtos_carrinho = JSON.parse(localStorage.getItem('bc_carrinho') || '[]');
+        var catalogo_de_produtos_categoriaAtual = 'todos';
+        var catalogo_de_produtos_filtroPreco = 'todos';
+        var catalogo_de_produtos_favoritos = JSON.parse(localStorage.getItem('bc_favoritos') || '[]');
+
+        var catalogo_de_produtos_produtos = [
+          { id: 1, nome: 'Fone Bluetooth Pro', preco: 149.90, precoAntigo: 229.90, desconto: 35, categoria: 'eletronicos', cor: '#6366f1', icone: '🎧', avaliacao: 4.5, avaliacoes: 238, vendidos: 1842, descricao: 'Fone de ouvido Bluetooth 5.3 com cancelamento de ruído ativo e 40h de bateria.' },
+          { id: 2, nome: 'Smartwatch Fit V2', preco: 349.90, precoAntigo: null, desconto: 0, categoria: 'eletronicos', cor: '#10b981', icone: '⌚', avaliacao: 4.2, avaliacoes: 156, vendidos: 923, descricao: 'Relógio inteligente com monitor cardíaco, GPS e resistência à água 5ATM.' },
+          { id: 3, nome: 'Carregador Turbo 65W', preco: 89.90, precoAntigo: 119.90, desconto: 25, categoria: 'acessorios', cor: '#f59e0b', icone: '⚡', avaliacao: 4.7, avaliacoes: 412, vendidos: 3210, descricao: 'Carregador GaN de 65W compatível com notebooks, tablets e celulares.' },
+          { id: 4, nome: 'Mouse Gamer RGB', preco: 129.90, precoAntigo: 159.90, desconto: 19, categoria: 'perifericos', cor: '#ef4444', icone: '🖱️', avaliacao: 4.4, avaliacoes: 305, vendidos: 1567, descricao: 'Mouse gamer com sensor óptico 16000 DPI, iluminação RGB e 7 botões programáveis.' },
+          { id: 5, nome: 'Câmera Segurança Wi-Fi', preco: 249.90, precoAntigo: 329.90, desconto: 24, categoria: 'smarthome', cor: '#3b82f6', icone: '📹', avaliacao: 4.0, avaliacoes: 189, vendidos: 745, descricao: 'Câmera de segurança com visão noturna, detecção de movimento e armazenamento em nuvem.' },
+          { id: 6, nome: 'Teclado Mecânico Blue', preco: 279.90, precoAntigo: null, desconto: 0, categoria: 'perifericos', cor: '#8b5cf6', icone: '⌨️', avaliacao: 4.6, avaliacoes: 278, vendidos: 1120, descricao: 'Teclado mecânico com switches Blue, estrutura em alumínio e iluminação RGB por tecla.' },
+          { id: 7, nome: 'Capa Premium iPhone 15', preco: 59.90, precoAntigo: 79.90, desconto: 25, categoria: 'acessorios', cor: '#ec4899', icone: '📱', avaliacao: 4.1, avaliacoes: 523, vendidos: 4102, descricao: 'Capa em silicone líquido com proteção militar, compatível com MagSafe.' },
+          { id: 8, nome: 'Smart Speaker Mini', preco: 199.90, precoAntigo: 259.90, desconto: 23, categoria: 'smarthome', cor: '#14b8a6', icone: '🔊', avaliacao: 4.3, avaliacoes: 197, vendidos: 890, descricao: 'Assistente de voz com som 360°, controle de casa inteligente e Bluetooth 5.2.' },
+          { id: 9, nome: 'Cabos USB-C Kit 3un', preco: 39.90, precoAntigo: null, desconto: 0, categoria: 'acessorios', cor: '#64748b', icone: '🔌', avaliacao: 4.8, avaliacoes: 876, vendidos: 6843, descricao: 'Kit com 3 cabos USB-C nylon trançado, 1.5m, carga rápida 100W.' },
+          { id: 10, nome: 'Monitor 27" 144Hz', preco: 1899.90, precoAntigo: 2299.90, desconto: 17, categoria: 'eletronicos', cor: '#0ea5e9', icone: '🖥️', avaliacao: 4.5, avaliacoes: 134, vendidos: 456, descricao: 'Monitor IPS 27 polegadas, 144Hz, 1ms, FreeSync Premium e HDR10.' }
+        ];
+
+        function catalogo_de_produtos_renderizar(produtos) {
+          var grid = document.getElementById('catalogo-de-produtos-grid');
+          var vazio = document.getElementById('catalogo-de-produtos-vazio');
+          if (produtos.length === 0) {
+            grid.classList.add('hidden');
+            vazio.classList.remove('hidden');
+            return;
+          }
+          grid.classList.remove('hidden');
+          vazio.classList.add('hidden');
+          var html = '';
+          produtos.forEach(function(p) {
+            var isFav = catalogo_de_produtos_favoritos.indexOf(p.id) !== -1;
+            html += '<div class="card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg active:scale-[0.97] transition-all cursor-pointer" onclick="catalogo_de_produtos_abrirDetalhe(' + p.id + ')">';
+            html += '<div class="relative">';
+            html += '<div class="h-36 flex items-center justify-center" style="background: linear-gradient(135deg, ' + p.cor + '22, ' + p.cor + '44)">';
+            html += '<span class="text-5xl">' + p.icone + '</span>';
+            html += '</div>';
+            if (p.desconto > 0) {
+              html += '<span class="badge absolute top-2 left-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">-' + p.desconto + '%</span>';
+            }
+            html += '<button onclick="event.stopPropagation(); catalogo_de_produtos_toggleFavorito(' + p.id + ', this)" class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm hover:bg-white active:scale-90 transition-all">';
+            html += '<svg class="w-4 h-4 ' + (isFav ? 'text-red-500 fill-current' : 'text-gray-400') + '" fill="' + (isFav ? 'currentColor' : 'none') + '" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>';
+            html += '</button>';
+            html += '</div>';
+            html += '<div class="p-3">';
+            html += '<h3 class="text-sm font-semibold text-gray-800 font-display leading-tight mb-1 line-clamp-2">' + p.nome + '</h3>';
+            html += '<div class="flex items-center gap-1 mb-2">';
+            html += '<svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+            html += '<span class="text-xs text-gray-500">' + p.avaliacao + ' (' + p.avaliacoes + ')</span>';
+            html += '</div>';
+            html += '<div class="flex items-end gap-2">';
+            html += '<span class="text-lg font-bold text-emerald-600 font-display">' + brl(p.preco) + '</span>';
+            if (p.precoAntigo) {
+              html += '<span class="text-xs text-gray-400 line-through mb-0.5">' + brl(p.precoAntigo) + '</span>';
+            }
+            html += '</div>';
+            html += '<span class="text-[10px] text-gray-400 mt-1 block">' + p.vendidos.toLocaleString('pt-BR') + ' vendidos</span>';
+            html += '</div>';
+            html += '</div>';
+          });
+          grid.innerHTML = html;
+        }
+
+        function catalogo_de_produtos_filtrar() {
+          var termo = document.getElementById('catalogo-de-produtos-busca').value.toLowerCase().trim();
+          var filtrados = catalogo_de_produtos_produtos.filter(function(p) {
+            var matchCat = catalogo_de_produtos_categoriaAtual === 'todos' || p.categoria === catalogo_de_produtos_categoriaAtual;
+            var matchBusca = p.nome.toLowerCase().indexOf(termo) !== -1;
+            var matchPreco = true;
+            if (catalogo_de_produtos_filtroPreco === 'menor50') matchPreco = p.preco <= 50;
+            else if (catalogo_de_produtos_filtroPreco === '50a200') matchPreco = p.preco > 50 && p.preco <= 200;
+            else if (catalogo_de_produtos_filtroPreco === 'maior200') matchPreco = p.preco > 200;
+            return matchCat && matchBusca && matchPreco;
+          });
+          catalogo_de_produtos_renderizar(filtrados);
+        }
+
+        function catalogo_de_produtos_selecionarCategoria(btn, cat) {
+          document.querySelectorAll('.catalogo-de-produtos-cat-chip').forEach(function(c) {
+            c.classList.remove('bg-marca-600', 'text-white', 'shadow-md', 'shadow-marca-200');
+            c.classList.add('bg-gray-100', 'text-gray-600');
+          });
+          btn.classList.remove('bg-gray-100', 'text-gray-600');
+          btn.classList.add('bg-marca-600', 'text-white', 'shadow-md', 'shadow-marca-200');
+          catalogo_de_produtos_categoriaAtual = cat;
+          catalogo_de_produtos_filtrar();
+        }
+
+        function catalogo_de_produtos_toggleFiltros() {
+          var el = document.getElementById('catalogo-de-produtos-filtros');
+          el.classList.toggle('hidden');
+        }
+
+        function catalogo_de_produtos_filtrarPreco(preco) {
+          document.querySelectorAll('.catalogo-de-produtos-btn-preco').forEach(function(b) {
+            b.classList.remove('bg-marca-50', 'text-marca-700', 'border-marca-200');
+            b.classList.add('bg-gray-50', 'text-gray-600', 'border-gray-200');
+          });
+          var ativo = document.querySelector('[data-preco="' + preco + '"]');
+          ativo.classList.remove('bg-gray-50', 'text-gray-600', 'border-gray-200');
+          ativo.classList.add('bg-marca-50', 'text-marca-700', 'border-marca-200');
+          catalogo_de_produtos_filtroPreco = preco;
+          catalogo_de_produtos_filtrar();
+        }
+
+        function catalogo_de_produtos_limparFiltros() {
+          catalogo_de_produtos_filtroPreco = 'todos';
+          document.querySelectorAll('.catalogo-de-produtos-btn-preco').forEach(function(b) {
+            b.classList.remove('bg-marca-50', 'text-marca-700', 'border-marca-200');
+            b.classList.add('bg-gray-50', 'text-gray-600', 'border-gray-200');
+          });
+          var todos = document.querySelector('[data-preco="todos"]');
+          if (todos) {
+            todos.classList.remove('bg-gray-50', 'text-gray-600', 'border-gray-200');
+            todos.classList.add('bg-marca-50', 'text-marca-700', 'border-marca-200');
+          }
+          document.getElementById('catalogo-de-produtos-busca').value = '';
+          catalogo_de_produtos_categoriaAtual = 'todos';
+          var cats = document.querySelectorAll('.catalogo-de-produtos-cat-chip');
+          cats.forEach(function(c) {
+            c.classList.remove('bg-marca-600', 'text-white', 'shadow-md', 'shadow-marca-200');
+            c.classList.add('bg-gray-100', 'text-gray-600');
+          });
+          if (cats[0]) {
+            cats[0].classList.remove('bg-gray-100', 'text-gray-600');
+            cats[0].classList.add('bg-marca-600', 'text-white', 'shadow-md', 'shadow-marca-200');
+          }
+          catalogo_de_produtos_filtrar();
+        }
+
+        function catalogo_de_produtos_toggleFavorito(produtoId, btn) {
+          var idx = catalogo_de_produtos_favoritos.indexOf(produtoId);
+          if (idx === -1) {
+            catalogo_de_produtos_favoritos.push(produtoId);
+            toast('Produto adicionado aos favoritos', 'ok');
+          } else {
+            catalogo_de_produtos_favoritos.splice(idx, 1);
+            toast('Produto removido dos favoritos', 'info');
+          }
+          localStorage.setItem('bc_favoritos', JSON.stringify(catalogo_de_produtos_favoritos));
+          catalogo_de_produtos_filtrar();
+        }
+
+        function catalogo_de_produtos_adicionarCarrinho(produtoId) {
+          var produto = catalogo_de_produtos_produtos.find(function(p) { return p.id === produtoId; });
+          if (!produto) return;
+          var existente = catalogo_de_produtos_carrinho.find(function(item) { return item.id === produtoId; });
+          if (existente) {
+            existente.qtd = (existente.qtd || 1) + 1;
+          } else {
+            catalogo_de_produtos_carrinho.push({ id: produtoId, qtd: 1 });
+          }
+          localStorage.setItem('bc_carrinho', JSON.stringify(catalogo_de_produtos_carrinho));
+          catalogo_de_produtos_atualizarCarrinho();
+          toast(produto.nome + ' adicionado ao carrinho', 'ok');
+        }
+
+        function catalogo_de_produtos_atualizarCarrinho() {
+          var count = 0;
+          var total = 0;
+          catalogo_de_produtos_carrinho.forEach(function(item) {
+            var produto = catalogo_de_produtos_produtos.find(function(p) { return p.id === item.id; });
+            if (produto) {
+              count += item.qtd;
+              total += produto.preco * item.qtd;
+            }
+          });
+          var countEl = document.getElementById('catalogo-de-produtos-cart-count');
+          var totalEl = document.getElementById('catalogo-de-produtos-cart-total');
+          if (count > 0) {
+            countEl.textContent = count;
+            countEl.classList.remove('hidden');
+          } else {
+            countEl.classList.add('hidden');
+          }
+          totalEl.textContent = brl(total);
+        }
+
+        function catalogo_de_produtos_abrirDetalhe(produtoId) {
+          var produto = catalogo_de_produtos_produtos.find(function(p) { return p.id === produtoId; });
+          if (!produto) return;
+          var estrelas = '';
+          for (var i = 1; i <= 5; i++) {
+            if (i <= Math.floor(produto.avaliacao)) {
+              estrelas += '<svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+            } else if (i - produto.avaliacao < 1) {
+              estrelas += '<svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20" style="opacity:0.5"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+            } else {
+              estrelas += '<svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+            }
+          }
+          var precoAntigoHtml = produto.precoAntigo ? '<span class="text-gray-400 line-through text-base ml-2">' + brl(produto.precoAntigo) + '</span>' : '';
+          var descontoHtml = produto.desconto > 0 ? '<span class="bg-red-100 text-red-600 text-xs font-bold px-2 py-1 rounded-full ml-2">-' + produto.desconto + '%</span>' : '';
+          var parcelamento = produto.preco > 100 ? '<p class="text-sm text-gray-500 mt-1">ou em até 3x de <strong>' + brl(produto.preco / 3) + '</strong> sem juros</p>' : '';
+          var html = '<div class="space-y-4">';
+          html += '<div class="h-48 flex items-center justify-center rounded-xl" style="background: linear-gradient(135deg, ' + produto.cor + '22, ' + produto.cor + '44)">';
+          html += '<span class="text-7xl">' + produto.icone + '</span>';
+          html += '</div>';
+          html += '<div>';
+          html += '<h2 class="text-xl font-bold text-gray-900 font-display">' + produto.nome + '</h2>';
+          html += '<div class="flex items-center gap-1 mt-1">' + estrelas + '<span class="text-sm text-gray-500 ml-1">' + produto.avaliacao + ' (' + produto.avaliacoes + ' avaliações)</span></div>';
+          html += '</div>';
+          html += '<div class="bg-gray-50 rounded-xl p-3">';
+          html += '<div class="flex items-center gap-1 flex-wrap"><span class="text-2xl font-bold text-emerald-600 font-display">' + brl(produto.preco) + '</span>' + precoAntigoHtml + descontoHtml + '</div>';
+          html += parcelamento;
+          html += '</div>';
+          html += '<div>';
+          html += '<h3 class="text-sm font-semibold text-gray-700 mb-1">Descrição</h3>';
+          html += '<p class="text-sm text-gray-600 font-body leading-relaxed">' + produto.descricao + '</p>';
+          html += '</div>';
+          html += '<div class="grid grid-cols-2 gap-3">';
+          html += '<div class="bg-gray-50 rounded-xl p-3 text-center"><p class="text-lg font-bold text-gray-800">' + produto.vendidos.toLocaleString('pt-BR') + '</p><p class="text-xs text-gray-500">Vendidos</p></div>';
+          html += '<div class="bg-gray-50 rounded-xl p-3 text-center"><p class="text-lg font-bold text-emerald-600">Frete grátis</p><p class="text-xs text-gray-500">Entrega</p></div>';
+          html += '</div>';
+          html += '<div class="flex gap-2 pt-2">';
+          html += '<button onclick="catalogo_de_produtos_adicionarCarrinho(' + produto.id + '); fecharModal();" class="flex-1 bg-marca-600 text-white py-3 rounded-xl font-semibold text-sm active:scale-95 transition-all shadow-lg shadow-marca-200 hover:bg-marca-700">Adicionar ao Carrinho</button>';
+          html += '<button onclick="catalogo_de_produtos_adicionarCarrinho(' + produto.id + '); fecharModal(); mostrarTela(\'checkout\');" class="flex-1 bg-emerald-600 text-white py-3 rounded-xl font-semibold text-sm active:scale-95 transition-all shadow-lg shadow-emerald-200 hover:bg-emerald-700">Comprar Agora</button>';
+          html += '</div>';
+          html += '</div>';
+          abrirModal(html, 'Detalhe do Produto');
+        }
+
+        catalogo_de_produtos_renderizar(catalogo_de_produtos_produtos);
+        catalogo_de_produtos_atualizarCarrinho();
+      </script>
+    </section>
+
+    <!-- TELAS -->
     </main>
 
     <!-- Navegação Inferior -->
