@@ -953,6 +953,355 @@
       </script>
     </section>
 
+    <section data-tela="checkout" class="hidden">
+<script>
+function checkout_selecionarPagamento(metodo) {
+  const cards = document.querySelectorAll('.checkout-radio-card');
+  cards.forEach(function(c) {
+    c.classList.remove('ring-2','ring-marca-500','bg-marca-50');
+    c.querySelector('.checkout-check').classList.add('hidden');
+  });
+  const sel = document.querySelector('[data-metodo="'+metodo+'"]');
+  if (sel) {
+    sel.classList.add('ring-2','ring-marca-500','bg-marca-50');
+    sel.querySelector('.checkout-check').classList.remove('hidden');
+  }
+  var camposCartao = document.getElementById('checkout-campos-cartao');
+  var infoPix = document.getElementById('checkout-info-pix');
+  var infoBoleto = document.getElementById('checkout-info-boleto');
+  if (camposCartao) camposCartao.classList.add('hidden');
+  if (infoPix) infoPix.classList.add('hidden');
+  if (infoBoleto) infoBoleto.classList.add('hidden');
+  if (metodo === 'cartao') { camposCartao.classList.remove('hidden'); }
+  else if (metodo === 'pix') { infoPix.classList.remove('hidden'); }
+  else if (metodo === 'boleto') { infoBoleto.classList.remove('hidden'); }
+}
+
+function checkout_toggleEndereco() {
+  var display = document.getElementById('checkout-endereco-display');
+  var form = document.getElementById('checkout-endereco-form');
+  var btn = document.getElementById('checkout-btn-endereco');
+  var inputs = form.querySelectorAll('input');
+  if (form.classList.contains('hidden')) {
+    display.classList.add('hidden');
+    form.classList.remove('hidden');
+    inputs.forEach(function(inp) { inp.removeAttribute('readonly'); });
+    btn.textContent = 'Salvar endereço';
+    btn.className = 'text-sm font-semibold text-green-600 hover:text-green-700 transition-colors';
+  } else {
+    inputs.forEach(function(inp) { inp.setAttribute('readonly',''); });
+    display.classList.remove('hidden');
+    form.classList.add('hidden');
+    btn.textContent = 'Alterar endereço';
+    btn.className = 'text-sm font-semibold text-marca-600 hover:text-marca-700 transition-colors';
+    toast('Endereço atualizado com sucesso','ok');
+  }
+}
+
+function checkout_mascaraCartao(input) {
+  var v = input.value.replace(/\D/g,'').slice(0,16);
+  var p = v.match(/(\d{0,4})(\d{0,4})(\d{0,4})(\d{0,4})/);
+  input.value = [p[1],p[2],p[3],p[4]].filter(Boolean).join(' ');
+}
+
+function checkout_mascaraValidade(input) {
+  var v = input.value.replace(/\D/g,'').slice(0,4);
+  if (v.length >= 2) { v = v.slice(0,2) + '/' + v.slice(2); }
+  input.value = v;
+}
+
+function checkout_mascaraCvv(input) {
+  input.value = input.value.replace(/\D/g,'').slice(0,3);
+}
+
+function checkout_copiarPix() {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText('5511987654321');
+    toast('Chave Pix copiada para a área de transferência','ok');
+  } else {
+    toast('Chave Pix: 5511987654321','info');
+  }
+}
+
+function checkout_confirmar() {
+  var metodoSelecionado = document.querySelector('input[name="pagamento"]:checked');
+  if (!metodoSelecionado) {
+    toast('Selecione uma forma de pagamento','erro');
+    return;
+  }
+  var metodo = metodoSelecionado.value;
+  if (metodo === 'cartao') {
+    var numCartao = document.getElementById('checkout-num-cartao').value.replace(/\s/g,'');
+    var validade = document.getElementById('checkout-validade').value;
+    var cvv = document.getElementById('checkout-cvv').value;
+    var nome = document.getElementById('checkout-nome-cartao').value.trim();
+    if (!numCartao || numCartao.length < 16) {
+      toast('Informe o número completo do cartão','erro'); return;
+    }
+    if (!validade || validade.length < 5) {
+      toast('Informe a validade do cartão','erro'); return;
+    }
+    if (!cvv || cvv.length < 3) {
+      toast('Informe o CVV do cartão','erro'); return;
+    }
+    if (!nome) {
+      toast('Informe o nome impresso no cartão','erro'); return;
+    }
+  }
+  mostrarTela('confirmacao-do-pedido');
+}
+</script>
+
+<div class="space-y-4 pb-28">
+
+  <div class="card">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+        <h2 class="text-lg font-display font-bold text-gray-900">Endereço de Entrega</h2>
+      </div>
+      <button id="checkout-btn-endereco" onclick="checkout_toggleEndereco()" class="text-sm font-semibold text-marca-600 hover:text-marca-700 transition-colors">Alterar endereço</button>
+    </div>
+
+    <div id="checkout-endereco-display" class="bg-gray-50 rounded-xl p-4">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-full bg-marca-100 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+        </div>
+        <div class="flex-1">
+          <p class="text-sm font-semibold text-gray-900">Marina Oliveira</p>
+          <p class="text-sm text-gray-600 mt-0.5">R. Augusta, 1520</p>
+          <p class="text-sm text-gray-600">Cj 42, Consolação</p>
+          <p class="text-sm text-gray-600">São Paulo, SP — CEP 01304-001</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1 mt-3 text-xs text-marca-600">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Entrega estimada: <span class="font-semibold">2 dias úteis</span>
+      </div>
+    </div>
+
+    <div id="checkout-endereco-form" class="hidden space-y-3">
+      <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1">CEP</label>
+        <input type="text" value="01304-001" readonly class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700" />
+      </div>
+      <div class="flex gap-3">
+        <div class="flex-1">
+          <label class="block text-xs font-medium text-gray-500 mb-1">Rua</label>
+          <input type="text" value="R. Augusta" readonly class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700" />
+        </div>
+        <div class="w-24">
+          <label class="block text-xs font-medium text-gray-500 mb-1">Número</label>
+          <input type="text" value="1520" readonly class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700" />
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1">Complemento</label>
+        <input type="text" value="Cj 42" readonly class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700" />
+      </div>
+      <div class="flex gap-3">
+        <div class="flex-1">
+          <label class="block text-xs font-medium text-gray-500 mb-1">Bairro</label>
+          <input type="text" value="Consolação" readonly class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700" />
+        </div>
+        <div class="w-32">
+          <label class="block text-xs font-medium text-gray-500 mb-1">Cidade</label>
+          <input type="text" value="São Paulo" readonly class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700" />
+        </div>
+        <div class="w-16">
+          <label class="block text-xs font-medium text-gray-500 mb-1">Estado</label>
+          <input type="text" value="SP" readonly class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flex items-center gap-2 mb-4">
+      <svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v10.5a2.25 2.25 0 002.25 2.25z"/></svg>
+      <h2 class="text-lg font-display font-bold text-gray-900">Forma de Pagamento</h2>
+    </div>
+
+    <div class="space-y-3">
+      <label data-metodo="cartao" class="checkout-radio-card flex items-center gap-3 p-4 border-2 border-gray-200 rounded-xl cursor-pointer transition-all hover:border-marca-300 active:scale-[0.98]">
+        <input type="radio" name="pagamento" value="cartao" onchange="checkout_selecionarPagamento('cartao')" class="hidden" />
+        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-gray-900">Cartão de Crédito</p>
+          <p class="text-xs text-gray-500">Visa, Mastercard, Elo, Hipercard</p>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="text-xs font-bold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">VISA</span>
+          <span class="text-xs font-bold text-red-700 bg-red-50 px-1.5 py-0.5 rounded">MC</span>
+        </div>
+        <div class="checkout-check hidden w-5 h-5 rounded-full bg-marca-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+        </div>
+      </label>
+
+      <label data-metodo="pix" class="checkout-radio-card flex items-center gap-3 p-4 border-2 border-gray-200 rounded-xl cursor-pointer transition-all hover:border-marca-300 active:scale-[0.98]">
+        <input type="radio" name="pagamento" value="pix" onchange="checkout_selecionarPagamento('pix')" class="hidden" />
+        <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z"/><rect x="6" y="6" width="4" height="4" rx="0.5"/><rect x="14" y="14" width="4" height="4" rx="0.5"/><path d="M17.5 9.5L15 7M9 17.5l2.5-2.5"/></svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-gray-900">Pix</p>
+          <p class="text-xs text-gray-500">Pagamento instantâneo</p>
+        </div>
+        <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-lg">10% OFF</span>
+        <div class="checkout-check hidden w-5 h-5 rounded-full bg-marca-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+        </div>
+      </label>
+
+      <label data-metodo="boleto" class="checkout-radio-card flex items-center gap-3 p-4 border-2 border-gray-200 rounded-xl cursor-pointer transition-all hover:border-marca-300 active:scale-[0.98]">
+        <input type="radio" name="pagamento" value="boleto" onchange="checkout_selecionarPagamento('boleto')" class="hidden" />
+        <div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 6h18M3 10h18M3 14h10M3 18h18"/></svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-gray-900">Boleto Bancário</p>
+          <p class="text-xs text-gray-500">Vencimento em 3 dias úteis</p>
+        </div>
+        <div class="checkout-check hidden w-5 h-5 rounded-full bg-marca-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+        </div>
+      </label>
+    </div>
+
+    <div id="checkout-campos-cartao" class="hidden mt-4 p-4 bg-gray-50 rounded-xl space-y-3 border border-gray-100">
+      <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1.5">Número do Cartão</label>
+        <div class="relative">
+          <input id="checkout-num-cartao" type="text" placeholder="0000 0000 0000 0000" oninput="checkout_mascaraCartao(this)" class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent" />
+          <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <div class="w-28">
+          <label class="block text-xs font-medium text-gray-500 mb-1.5">Validade</label>
+          <input id="checkout-validade" type="text" placeholder="MM/AA" oninput="checkout_mascaraValidade(this)" class="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent" />
+        </div>
+        <div class="w-24">
+          <label class="block text-xs font-medium text-gray-500 mb-1.5">CVV</label>
+          <input id="checkout-cvv" type="text" placeholder="***" oninput="checkout_mascaraCvv(this)" class="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent" />
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1.5">Nome no Cartão</label>
+        <input id="checkout-nome-cartao" type="text" placeholder="Como impresso no cartão" class="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent uppercase" />
+      </div>
+      <div class="flex items-center gap-2 pt-1">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
+        <span class="text-xs text-gray-500">Pagamento seguro e criptografado</span>
+      </div>
+    </div>
+
+    <div id="checkout-info-pix" class="hidden mt-4 p-4 bg-emerald-50 rounded-xl border border-emerald-100">
+      <div class="flex items-center gap-2 mb-2">
+        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+        <p class="text-sm font-semibold text-emerald-800">Pagamento via Pix</p>
+      </div>
+      <p class="text-xs text-emerald-700 mb-3">Ao confirmar, você receberá o QR Code para pagamento instantâneo.</p>
+      <div class="flex items-center gap-2 bg-white rounded-lg p-2.5 border border-emerald-200">
+        <span class="text-xs text-gray-500 flex-1 truncate">Chave Pix: 5511987654321</span>
+        <button onclick="checkout_copiarPix()" class="text-xs font-semibold text-marca-600 hover:text-marca-700 bg-marca-50 px-3 py-1.5 rounded-lg transition-colors">Copiar</button>
+      </div>
+    </div>
+
+    <div id="checkout-info-boleto" class="hidden mt-4 p-4 bg-amber-50 rounded-xl border border-amber-100">
+      <div class="flex items-center gap-2 mb-2">
+        <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+        <p class="text-sm font-semibold text-amber-800">Boleto Bancário</p>
+      </div>
+      <p class="text-xs text-amber-700 mb-1">O boleto será gerado e enviado para <span class="font-semibold">maria.oliveira@email.com</span></p>
+      <p class="text-xs text-amber-700">Vencimento em 3 dias úteis. O pedido será processado após a confirmação do pagamento.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+        <h2 class="text-lg font-display font-bold text-gray-900">Resumo do Pedido</h2>
+      </div>
+      <button onclick="mostrarTela('carrinho-de-compras')" class="text-xs font-semibold text-marca-600 hover:text-marca-700 transition-colors">Editar carrinho</button>
+    </div>
+
+    <div class="space-y-3">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center flex-shrink-0">
+          <span class="text-sm font-bold text-blue-700">JBL</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-gray-900 leading-tight">Fone JBL Tune 770NC</p>
+          <p class="text-xs text-gray-500 mt-0.5">Sem fio, Cancelamento de ruído</p>
+          <p class="text-xs text-gray-500">Qtd: 1</p>
+        </div>
+        <p class="text-sm font-semibold text-gray-900 flex-shrink-0">R$ 349,90</p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center flex-shrink-0">
+          <span class="text-sm font-bold text-emerald-700">ANK</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-gray-900 leading-tight">Carregador Portátil Anker 20.000mAh</p>
+          <p class="text-xs text-gray-500 mt-0.5">PowerBank, USB-C + USB-A</p>
+          <p class="text-xs text-gray-500">Qtd: 2</p>
+        </div>
+        <p class="text-sm font-semibold text-gray-900 flex-shrink-0">R$ 379,80</p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center flex-shrink-0">
+          <span class="text-sm font-bold text-purple-700">USB</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-gray-900 leading-tight">Cabo USB-C Premium 2m</p>
+          <p class="text-xs text-gray-500 mt-0.5">Trançado nylon, 100W</p>
+          <p class="text-xs text-gray-500">Qtd: 1</p>
+        </div>
+        <p class="text-sm font-semibold text-gray-900 flex-shrink-0">R$ 29,90</p>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-100 mt-4 pt-4 space-y-2">
+      <div class="flex justify-between text-sm text-gray-600">
+        <span>Subtotal</span>
+        <span>R$ 759,60</span>
+      </div>
+      <div class="flex justify-between text-sm text-gray-600">
+        <span>Frete</span>
+        <span class="text-green-600 font-medium">Grátis</span>
+      </div>
+      <div class="flex justify-between text-sm text-gray-600">
+        <span>Desconto Pix</span>
+        <span class="text-emerald-600 font-medium">- R$ 75,96</span>
+      </div>
+      <div class="border-t border-gray-200 pt-2 flex justify-between items-center">
+        <span class="text-base font-display font-bold text-gray-900">Total</span>
+        <span class="text-xl font-display font-bold text-marca-600">R$ 683,64</span>
+      </div>
+      <p class="text-xs text-gray-400 text-right">em até 3x de R$ 240,00 sem juros</p>
+    </div>
+  </div>
+
+  <div class="card bg-gradient-to-br from-marca-50 to-white border-marca-100">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-marca-100 flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-gray-900">Compra Protegida</p>
+        <p class="text-xs text-gray-500">Seu dinheiro de volta em até 7 dias se não ficar satisfeito.</p>
+      </div>
+    </div>
+  </div
+
     <!-- TELAS -->
     </main>
 
