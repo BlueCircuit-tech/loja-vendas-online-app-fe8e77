@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nexo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        marca: {
+                            50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe',
+                            300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1',
+                            600: '#4f46e5', 700: '#4338ca', 800: '#3730a3',
+                            900: '#312e81', 950: '#1e1b4b',
+                        },
+                        destaque: {
+                            50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0',
+                            300: '#6ee7b7', 400: '#34d399', 500: '#10b981',
+                            600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b',
+                        },
+                        superficie: { 0: '#ffffff', 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0' },
+                    },
+                    fontFamily: { display: ['Outfit','sans-serif'], body: ['"Plus Jakarta Sans"','sans-serif'] },
+                    boxShadow: {
+                        'sutil': '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)',
+                        'card': '0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05)',
+                        'elevado': '0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04)',
+                        'nav': '0 -4px 20px rgba(0,0,0,0.06)',
+                        'brand': '0 4px 14px rgba(79,70,229,0.35)',
+                    },
+                    borderRadius: { '2xl': '1rem', '3xl': '1.5rem' },
+                },
+            },
+        };
+    </script>
+    <style>
+        * { -webkit-tap-highlight-color: transparent; }
+        html, body { height: 100%; overflow: hidden; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f172a; }
+        .moldura-app {
+            width: 100%; max-width: 390px; height: 100vh; max-height: 844px;
+            margin: 0 auto; position: relative; overflow: hidden;
+            background: #f8fafc; display: flex; flex-direction: column;
+        }
+        @media (min-width: 768px) {
+            body { display: flex; align-items: center; justify-content: center; padding: 16px; }
+            .moldura-app {
+                height: min(844px, 100vh - 32px); border-radius: 44px;
+                border: 6px solid #1e293b; box-shadow: 0 25px 60px rgba(0,0,0,0.4), 0 0 0 2px #334155;
+            }
+        }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        [data-tela] { animation: fadeSlideIn .28s ease-out; }
+        [data-tela].hidden { display: none !important; }
+        .barra-status { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .nav-app {
+            position: absolute; bottom: 0; left: 0; right: 0; z-index: 50;
+            background: rgba(255,255,255,0.92); backdrop-filter: blur(14px) saturate(180%);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
+            border-top: 1px solid rgba(226,232,240,0.7); box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        .nav-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; border: none; background: none; cursor: pointer; transition: color .2s; color: #94a3b8; font-size: 10.5px; font-weight: 600; font-family: 'Plus Jakarta Sans',sans-serif; position: relative; min-width: 0; flex: 1; }
+        .nav-btn::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%) scaleX(0);
+            width: 32px; height: 3px; border-radius: 0 0 3px 3px; transition: transform .25s cubic-bezier(.4,0,.2,1);
+        }
+        .nav-btn.ativo { color: #4f46e5; }
+        .nav-btn.ativo::before { background: #4f46e5; transform: translateX(-50%) scaleX(1); }
+        .nav-btn svg { transition: transform .2s; }
+        .nav-btn:active svg { transform: scale(0.88); }
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        *:focus-visible { outline: 2px solid #6366f1; outline-offset: 2px; border-radius: 6px; }
+        .badge {
+            display: inline-flex; align-items: center; padding: 3px 10px;
+            border-radius: 20px; font-size: 11px; font-weight: 700;
+            font-family: 'Plus Jakarta Sans',sans-serif; letter-spacing: 0.01em;
+        }
+        .card {
+            background: #fff; border-radius: 1rem; padding: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+            transition: box-shadow .2s, transform .15s;
+        }
+        .card:active { transform: scale(0.985); }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 14px 24px; border-radius: 14px; font-weight: 700; font-size: 15px;
+            border: none; cursor: pointer; font-family: 'Plus Jakarta Sans',sans-serif;
+            transition: all .2s; white-space: nowrap;
+        }
+        .btn:active { transform: scale(0.96); }
+        #toast-container { position: absolute; top: 52px; left: 12px; right: 12px; z-index: 200; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+        .toast-item {
+            pointer-events: auto; padding: 14px 18px; border-radius: 14px;
+            color: #fff; font-size: 13.5px; font-weight: 600;
+            font-family: 'Plus Jakarta Sans',sans-serif;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            animation: toastIn .35s cubic-bezier(.4,0,.2,1);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .toast-item.sair { animation: toastOut .3s ease-in forwards; }
+        @keyframes toastIn { from { opacity: 0; transform: translateY(-16px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes toastOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-16px) scale(0.9); } }
+        .toast-ok { background: #059669; }
+        .toast-erro { background: #dc2626; }
+        .toast-info { background: #4f46e5; }
+        #modal-overlay {
+            position: absolute; inset: 0; z-index: 150; background: rgba(15,23,42,0.55);
+            backdrop-filter: blur(3px); display: flex; align-items: flex-end; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity .22s;
+        }
+        #modal-overlay.aberto { opacity: 1; pointer-events: auto; }
+        #modal-overlay.aberto #modal-cartao { transform: translateY(0); }
+        #modal-cartao {
+            background: #fff; border-radius: 24px 24px 0 0; width: 100%; max-height: 78%;
+            overflow-y: auto; padding: 20px; transform: translateY(100%);
+            transition: transform .32s cubic-bezier(.4,0,.2,1);
+        }
+        @media (min-width: 768px) {
+            #modal-overlay { align-items: center; }
+            #modal-cartao { border-radius: 24px; max-width: 360px; max-height: 70%; transform: translateY(20px) scale(0.95); }
+            #modal-overlay.aberto #modal-cartao { transform: translateY(0) scale(1); }
+        }
+        .produto-img {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            border-radius: 14px; display: flex; align-items: center; justify-content: center;
+        }
+        .qtd-btn {
+            width: 32px; height: 32px; border-radius: 10px; border: 2px solid #e2e8f0;
+            background: #fff; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 16px; font-weight: 700; color: #475569;
+            transition: all .15s; font-family: 'Plus Jakarta Sans',sans-serif;
+        }
+        .qtd-btn:active { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+        .skeleton { background: linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%); background-size:200% 100%; animation:shimmer 1.4s infinite; border-radius:12px; }
+        @keyframes shimmer { 0%{background-position:200% 0}100%{background-position:-200% 0} }
+        .pulse-dot { width:8px;height:8px;border-radius:50%;background:#10b981;animation:pulse-dot 2s infinite; }
+        @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)} }
+    </style>
+</head>
+<body>
+
+<div class="moldura-app" id="app-moldura">
+    <!-- Barra de Status -->
+    <div class="barra-status flex items-center justify-between px-7 pt-3 pb-1 bg-white shrink-0" style="height:44px">
+        <span class="text-sm font-semibold text-slate-800" id="relogio">09:41</span>
+        <div class="flex items-center gap-1.5">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor" class="text-slate-800"><rect x="0" y="6" width="3" height="6" rx=".6"/><rect x="4.5" y="4" width="3" height="8" rx=".6"/><rect x="9" y="2" width="3" height="10" rx=".6"/><rect x="13.5" y="0" width="3" height="12" rx=".6"/></svg>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor" class="text-slate-800"><path d="M7.5 2.8C5.6 2.8 3.6 3.7 2.3 5.3L1.1 3.7C2.8 1.7 5.2.5 7.5.5s4.7 1.2 6.4 3.2l-1.2 1.6C11.4 3.7 9.4 2.8 7.5 2.8zM5.2 6.4L4 8C5.4 9 7 9.5 7.5 9.5s2.1-.5 3.5-1.5l-1.2-1.6C8.4 7 7 7 7.5 7C6.8 7 6 6.7 5.2 6.4z" opacity=".35"/><rect x="6.5" y="10.2" width="2" height=".8" rx=".4"/><rect x="5.8" y="11" width="4.4" height=".8" rx=".4"/></svg>
+            <svg width="25" height="12" viewBox="0 0 25 12" fill="currentColor" class="text-slate-800"><rect x="0" y="0" width="22" height="12" rx="3" stroke="currentColor" stroke-width="1" fill="none"/><rect x="1" y="1" width="18" height="10" rx="2" fill="currentColor"/><rect x="22.5" y="3.5" width="2.5" height="5" rx="1.5" fill="currentColor"/></svg>
+        </div>
+    </div>
+
+    <!-- Logo / Brand -->
+    <div class="flex items-center gap-2.5 px-5 py-3 bg-white shrink-0 border-b border-slate-100">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+            <rect width="34" height="34" rx="10" fill="url(#g)"/>
+            <path d="M10 24V14l7 7V14" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17 24V14l7 7V14" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+            <defs><linearGradient id="g" x1="0" y1="0" x2="34" y2="34"><stop stop-color="#818cf8"/><stop offset="1" stop-color="#4f46e5"/></linearGradient></defs>
+        </svg>
+        <div>
+            <span class="font-display font-800 text-lg text-marca-800 tracking-tight leading-none">Nexo</span>
+            <span class="block text-[9px] font-body font-600 text-marca-400 tracking-widest uppercase leading-tight">Catálogo Digital</span>
+        </div>
+    </div>
+
+    <!-- Área de telas -->
+    <main class="flex-1 relative overflow-hidden bg-superficie-50" id="conteudo-principal">
+        <!-- TELAS -->
+    </main>
+
+    <!-- Navegação Inferior -->
+    <nav class="nav-app shrink-0" style="padding-bottom:max(8px, env(safe-area-inset-bottom))">
+        <div class="flex items-start justify-around pt-2 px-1 max-w-[390px] mx-auto">
+            <button class="nav-btn ativo" data-nav="catalogo-de-produtos" onclick="mostrarTela('catalogo-de-produtos')" aria-label="Catálogo">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                <span>Catálogo</span>
+            </button>
+            <button class="nav-btn" data-nav="detalhe-do-produto" onclick="mostrarTela('detalhe-do-produto')" aria-label="Produto">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span>Produto</span>
+            </button>
+            <button class="nav-btn" data-nav="carrinho-de-compras" onclick="mostrarTela('carrinho-de-compras')" aria-label="Carrinho">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                <span>Carrinho</span>
+            </button>
+            <button class="nav-btn" data-nav="checkout" onclick="mostrarTela('checkout')" aria-label="Checkout">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                <span>Checkout</span>
+            </button>
+            <button class="nav-btn" data-nav="confirmacao-do-pedido" onclick="mostrarTela('confirmacao-do-pedido')" aria-label="Confirmação">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Confirmação</span>
+            </button>
+            <button class="nav-btn" data-nav="meus-pedidos" onclick="mostrarTela('meus-pedidos')" aria-label="Pedidos">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                <span>Pedidos</span>
+            </button>
+            <button class="nav-btn" data-nav="painel-administrativo" onclick="mostrarTela('painel-administrativo')" aria-label="Admin">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                <span>Admin</span>
+            </button>
+            <button class="nav-btn" data-nav="aprovar-orcamentos" onclick="mostrarTela('aprovar-orcamentos')" aria-label="Orçamentos">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+                <span>Orçamentos</span>
+            </button>
+            <button class="nav-btn" data-nav="meu-perfil" onclick="mostrarTela('meu-perfil')" aria-label="Perfil">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>Perfil</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Toasts -->
+    <div id="toast-container"></div>
+
+    <!-- Modal -->
+    <div id="modal-overlay" onclick="if(event.target===this)fecharModal()">
+        <div id="modal-cartao"></div>
+    </div>
+</div>
+
+<script>
+function mostrarTela(id) {
+    document.querySelectorAll('[data-tela]').forEach(function (s) {
+        s.classList.toggle('hidden', s.dataset.tela !== id);
+    });
+    document.querySelectorAll('[data-nav]').forEach(function (b) {
+        b.classList.toggle('ativo', b.dataset.nav === id);
+    });
+    window.scrollTo({ top: 0 });
+}
+
+function toast(mensagem, tipo) {
+    var c = document.getElementById('toast-container');
+    var el = document.createElement('div');
+    var icones = { ok: '✓', erro: '✕', info: 'ℹ' };
+    el.className = 'toast-item toast-' + (tipo || 'info');
+    el.innerHTML = '<span style="font-size:15px;font-weight:800">' + (icones[tipo] || 'ℹ') + '</span>' + mensagem;
+    c.appendChild(el);
+    setTimeout(function () {
+        el.classList.add('sair');
+        setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 300);
+    }, 3000);
+}
+
+function abrirModal(html, titulo) {
+    var overlay = document.getElementById('modal-overlay');
+    var cartao = document.getElementById('modal-cartao');
+    cartao.innerHTML = '<div class="flex items-center justify-between mb-4"><h3 class="font-display font-700 text-lg text-slate-800">' + (titulo || '') + '</h3><button onclick="fecharModal()" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>' + html;
+    overlay.classList.add('aberto');
+    document.addEventListener('keydown', escFechar);
+}
+function fecharModal() {
+    document.getElementById('modal-overlay').classList.remove('aberto');
+    document.removeEventListener('keydown', escFechar);
+}
+function escFechar(e) { if (e.key === 'Escape') fecharModal(); }
+
+function brl(valor) {
+    return 'R$ ' + Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function dataBR(iso) {
+    if (!iso) return '—';
+    var d = new Date(iso + 'T03:00:00');
+    return d.getDate().toString().padStart(2, '0') + '/' + (d.getMonth() + 1).toString().padStart(2, '0') + '/' + d.getFullYear();
+}
+
+// Relógio da barra de status
+function atualizarRelogio() {
+    var agora = new Date();
+    var h = agora.getHours().toString().padStart(2, '0');
+    var m = agora.getMinutes().toString().padStart(2, '0');
+    var el = document.getElementById('relogio');
+    if (el) el.textContent = h + ':' + m;
+}
+atualizarRelogio();
+setInterval(atualizarRelogio, 30000);
+
+document.addEventListener('DOMContentLoaded', function () {
+    mostrarTela('catalogo-de-produtos');
+});
+</script>
+
+</body>
+</html>
