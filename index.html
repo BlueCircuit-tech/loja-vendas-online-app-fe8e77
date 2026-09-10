@@ -728,6 +728,231 @@
   })();
 </script>
 
+    <section data-tela="carrinho-de-compras" class="hidden">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h2 class="text-2xl font-display font-bold text-gray-900">Meu Carrinho</h2>
+          <p class="text-sm text-gray-500 mt-0.5 font-body">3 itens</p>
+        </div>
+        <button onclick="mostrarTela('catalogo-de-produtos')" class="text-sm font-medium text-brand-600 hover:text-brand-700 flex items-center gap-1 active:scale-95 transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          Continuar comprando
+        </button>
+      </div>
+
+      <div id="lista-itens-carrinho" class="space-y-3">
+        <div class="bg-white rounded-2xl p-3 shadow-sm border border-gray-100 flex gap-3 carrinho-item" data-id="1">
+          <div class="w-20 h-20 rounded-xl bg-gradient-to-br from-orange-100 to-orange-50 flex-shrink-0 flex items-center justify-center overflow-hidden">
+            <svg class="w-10 h-10 text-orange-300" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" opacity="0.3"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" opacity="0.5"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-display font-semibold text-sm text-gray-900 truncate">Protetor Solar FPS 50</h4>
+            <p class="text-xs text-gray-500 mt-0.5">Toque seco · 200ml</p>
+            <div class="flex items-center justify-between mt-2">
+              <div class="flex items-center gap-1.5">
+                <button onclick="carrinho_de_compras_alterarQuantidade(this, -1)" class="w-7 h-7 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-sm active:scale-90 transition-all">−</button>
+                <span class="text-sm font-semibold text-gray-900 w-6 text-center qtd-valor">2</span>
+                <button onclick="carrinho_de_compras_alterarQuantidade(this, 1)" class="w-7 h-7 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-sm active:scale-90 transition-all">+</button>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-bold text-gray-900 preco-subtotal">R$ 119,80</span>
+                <button onclick="carrinho_de_compras_removerItem(this)" class="w-7 h-7 rounded-lg hover:bg-red-50 flex items-center justify-center text-gray-400 hover:text-red-500 transition-all active:scale-90">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-3 shadow-sm border border-gray-100 flex gap-3 carrinho-item" data-id="2">
+          <div class="w-20 h-20 rounded-xl bg-gradient-to-br from-blue-100 to-blue-50 flex-shrink-0 flex items-center justify-center overflow-hidden">
+            <svg class="w-10 h-10 text-blue-300" fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" opacity="0.4"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-display font-semibold text-sm text-gray-900 truncate">Camiseta Algodão Premium</h4>
+            <p class="text-xs text-gray-500 mt-0.5">Azul marinho · G</p>
+            <div class="flex items-center justify-between mt-2">
+              <div class="flex items-center gap-1.5">
+                <button onclick="carrinho_de_compras_alterarQuantidade(this, -1)" class="w-7 h-7 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-sm active:scale-90 transition-all">−</button>
+                <span class="text-sm font-semibold text-gray-900 w-6 text-center qtd-valor">1</span>
+                <button onclick="carrinho_de_compras_alterarQuantidade(this, 1)" class="w-7 h-7 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-sm active:scale-90 transition-all">+</button>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-bold text-gray-900 preco-subtotal">R$ 89,90</span>
+                <button onclick="carrinho_de_compras_removerItem(this)" class="w-7 h-7 rounded-lg hover:bg-red-50 flex items-center justify-center text-gray-400 hover:text-red-500 transition-all active:scale-90">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-3 shadow-sm border border-gray-100 flex gap-3 carrinho-item" data-id="3">
+          <div class="w-20 h-20 rounded-xl bg-gradient-to-br from-purple-100 to-purple-50 flex-shrink-0 flex items-center justify-center overflow-hidden">
+            <svg class="w-10 h-10 text-purple-300" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z" opacity="0.4"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-display font-semibold text-sm text-gray-900 truncate">Mochila Impermeável 25L</h4>
+            <p class="text-xs text-gray-500 mt-0.5">Preto · Único</p>
+            <div class="flex items-center justify-between mt-2">
+              <div class="flex items-center gap-1.5">
+                <button onclick="carrinho_de_compras_alterarQuantidade(this, -1)" class="w-7 h-7 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-sm active:scale-90 transition-all">−</button>
+                <span class="text-sm font-semibold text-gray-900 w-6 text-center qtd-valor">1</span>
+                <button onclick="carrinho_de_compras_alterarQuantidade(this, 1)" class="w-7 h-7 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-sm active:scale-90 transition-all">+</button>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-bold text-gray-900 preco-subtotal">R$ 189,90</span>
+                <button onclick="carrinho_de_compras_removerItem(this)" class="w-7 h-7 rounded-lg hover:bg-red-50 flex items-center justify-center text-gray-400 hover:text-red-500 transition-all active:scale-90">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-2.5">
+          <span class="text-sm text-gray-600">Subtotal</span>
+          <span id="carrinho-subtotal" class="text-sm font-semibold text-gray-900">R$ 399,60</span>
+        </div>
+        <div class="flex items-center justify-between mb-2.5">
+          <span class="text-sm text-gray-600">Desconto</span>
+          <span id="carrinho-desconto" class="text-sm font-semibold text-emerald-600">R$ 0,00</span>
+        </div>
+        <div class="flex items-center justify-between mb-2.5">
+          <span class="text-sm text-gray-600">Frete estimado</span>
+          <span id="carrinho-frete" class="text-sm font-semibold text-emerald-600">Grátis</span>
+        </div>
+        <div class="border-t border-gray-100 pt-2.5 mt-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-display font-bold text-gray-900">Total</span>
+            <span id="carrinho-total" class="text-lg font-bold text-brand-700">R$ 399,60</span>
+          </div>
+        </div>
+        <div class="mt-3.5">
+          <p class="text-xs text-gray-500 mb-1.5 font-medium">Cupom de desconto</p>
+          <div class="flex gap-2">
+            <input id="cupom-input" type="text" placeholder="Código do cupom" class="flex-1 text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-300 focus:ring-2 focus:ring-brand-100 outline-none transition-all font-body uppercase tracking-wide">
+            <button onclick="carrinho_de_compras_aplicarCupom()" class="px-4 py-2.5 bg-brand-600 text-white text-sm font-semibold rounded-xl hover:bg-brand-700 active:scale-95 transition-all shadow-sm">Aplicar</button>
+          </div>
+          <p id="cupom-msg" class="text-xs mt-1.5 hidden"></p>
+        </div>
+      </div>
+
+      <div class="h-24"></div>
+
+      <div class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-gray-100 px-5 py-3.5 z-50">
+        <button onclick="carrinho_de_compras_finalizarPedido()" class="w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-display font-bold text-base rounded-2xl shadow-lg shadow-emerald-200 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Finalizar Pedido · <span id="btn-total-carrinho">R$ 399,60</span>
+        </button>
+      </div>
+
+      <div id="carrinho-overlay" class="fixed inset-0 bg-black/40 z-40 hidden items-end justify-center" onclick="carrinho_de_compras_fecharOverlay(event)">
+        <div id="carrinho-item-detalhe" class="bg-white rounded-t-3xl p-6 w-full max-w-md transform translate-y-full transition-transform duration-300">
+        </div>
+      </div>
+
+      <script>
+        let carrinho_desconto_valor = 0;
+        let carrinho_cupom_aplicado = false;
+
+        function carrinho_de_compras_alterarQuantidade(btn, delta) {
+          const itemEl = btn.closest('.carrinho-item');
+          const qtdSpan = itemEl.querySelector('.qtd-valor');
+          const subtotalSpan = itemEl.querySelector('.preco-subtotal');
+          const precoUnitario = parseFloat(itemEl.dataset.preco || '59.90');
+          let qtd = parseInt(qtdSpan.textContent);
+          qtd = Math.max(1, Math.min(99, qtd + delta));
+          qtdSpan.textContent = qtd;
+          const novoSubtotal = qtd * precoUnitario;
+          subtotalSpan.textContent = 'R$ ' + novoSubtotal.toFixed(2).replace('.', ',');
+          carrinho_de_compras_recalcular();
+        }
+
+        function carrinho_de_compras_removerItem(btn) {
+          const itemEl = btn.closest('.carrinho-item');
+          itemEl.style.transition = 'all 0.3s ease';
+          itemEl.style.opacity = '0';
+          itemEl.style.transform = 'translateX(100%)';
+          setTimeout(() => {
+            itemEl.remove();
+            carrinho_de_compras_recalcular();
+            toast('Item removido do carrinho', 'info');
+          }, 300);
+        }
+
+        function carrinho_de_compras_recalcular() {
+          const itens = document.querySelectorAll('.carrinho-item');
+          let subtotal = 0;
+          const itensData = {
+            '1': { preco: 59.90 },
+            '2': { preco: 89.90 },
+            '3': { preco: 189.90 }
+          };
+          itens.forEach(item => {
+            const id = item.dataset.id;
+            const qtd = parseInt(item.querySelector('.qtd-valor').textContent);
+            subtotal += (itensData[id]?.preco || 0) * qtd;
+          });
+          let desconto = 0;
+          if (carrinho_cupom_aplicado) {
+            desconto = subtotal * 0.10;
+          }
+          const frete = subtotal > 150 ? 0 : 15.90;
+          const total = subtotal - desconto + frete;
+          carrinho_desconto_valor = desconto;
+          document.getElementById('carrinho-subtotal').textContent = 'R$ ' + subtotal.toFixed(2).replace('.', ',');
+          const descEl = document.getElementById('carrinho-desconto');
+          descEl.textContent = desconto > 0 ? '- R$ ' + desconto.toFixed(2).replace('.', ',') : 'R$ 0,00';
+          descEl.className = 'text-sm font-semibold ' + (desconto > 0 ? 'text-emerald-600' : 'text-gray-500');
+          const freteEl = document.getElementById('carrinho-frete');
+          freteEl.textContent = frete === 0 ? 'Grátis' : 'R$ ' + frete.toFixed(2).replace('.', ',');
+          freteEl.className = 'text-sm font-semibold ' + (frete === 0 ? 'text-emerald-600' : 'text-gray-900');
+          document.getElementById('carrinho-total').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+          document.getElementById('btn-total-carrinho').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+          const itemCount = document.querySelectorAll('.carrinho-item').length;
+          const subtitle = document.querySelector('[data-tela="carrinho-de-compras"] h2 + p');
+          if (subtitle) subtitle.textContent = itemCount + ' ' + (itemCount === 1 ? 'item' : 'itens');
+        }
+
+        function carrinho_de_compras_aplicarCupom() {
+          const input = document.getElementById('cupom-input');
+          const msg = document.getElementById('cupom-msg');
+          const codigo = input.value.trim().toUpperCase();
+          if (!codigo) {
+            msg.textContent = 'Digite um código de cupom.';
+            msg.className = 'text-xs mt-1.5 text-red-500';
+            return;
+          }
+          const cuponsValidos = ['BEMVINDO10', 'PRIMEIRA', 'SAVE10', 'BLACKFRIDAY'];
+          if (cuponsValidos.includes(codigo)) {
+            carrinho_cupom_aplicado = true;
+            msg.textContent = 'Cupom ' + codigo + ' aplicado! 10% OFF no pedido.';
+            msg.className = 'text-xs mt-1.5 text-emerald-600 font-medium';
+            carrinho_de_compras_recalcular();
+            toast('Cupom aplicado com sucesso!', 'ok');
+          } else {
+            carrinho_cupom_aplicado = false;
+            msg.textContent = 'Cupom inválido ou expirado.';
+            msg.className = 'text-xs mt-1.5 text-red-500';
+            carrinho_de_compras_recalcular();
+          }
+        }
+
+        function carrinho_de_compras_finalizarPedido() {
+          const itens = document.querySelectorAll('.carrinho-item');
+          if (itens.length === 0) {
+            toast('Seu carrinho está vazio.', 'erro');
+            return;
+          }
+          toast('Redirecionando para o checkout...', 'info');
+          setTimeout(() => mostrarTela('checkout'), 400);
+        }
+      </script>
+    </section>
+
     <!-- TELAS -->
     </main>
 
