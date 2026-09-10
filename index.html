@@ -1572,6 +1572,206 @@ function checkout_confirmar() {
       </script>
     </section>
 
+    <section data-tela="meus-pedidos" class="hidden">
+      <div class="px-5 pt-2 pb-24">
+        <div class="mb-5">
+          <h1 class="font-display text-2xl font-bold text-gray-900">Meus Pedidos</h1>
+          <p class="text-sm text-gray-500 mt-1">Acompanhe seus pedidos e entregas</p>
+        </div>
+
+        <div class="flex gap-2 mb-4 overflow-x-auto pb-1 -mx-5 px-5 scrollbar-hide">
+          <button onclick="meus_pedidos_filtrar('todos')" id="filtro-todos" class="filtro-btn active-filter shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200">Todos</button>
+          <button onclick="meus_pedidos_filtrar('em-andamento')" id="filtro-em-andamento" class="filtro-btn shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200">Em andamento</button>
+          <button onclick="meus_pedidos_filtrar('entregues')" id="filtro-entregues" class="filtro-btn shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200">Entregues</button>
+          <button onclick="meus_pedidos_filtrar('aguardando')" id="filtro-aguardando" class="filtro-btn shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200">Aguardando</button>
+        </div>
+
+        <div id="indicadores-pedidos" class="grid grid-cols-3 gap-3 mb-5">
+          <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center">
+                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+              </div>
+            </div>
+            <p class="font-display font-bold text-lg text-gray-900" id="ind-total">8</p>
+            <p class="text-xs text-gray-500">Total</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-7 h-7 rounded-lg bg-amber-50 flex items-center justify-center">
+                <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+            </div>
+            <p class="font-display font-bold text-lg text-gray-900" id="ind-andamento">3</p>
+            <p class="text-xs text-gray-500">Em andamento</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center">
+                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+            </div>
+            <p class="font-display font-bold text-lg text-gray-900" id="ind-entregues">4</p>
+            <p class="text-xs text-gray-500">Entregues</p>
+          </div>
+        </div>
+
+        <div id="lista-pedidos" class="space-y-3"></div>
+
+        <div id="empty-pedidos" class="hidden text-center py-12">
+          <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-50 flex items-center justify-center">
+            <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          </div>
+          <p class="font-display font-semibold text-gray-700 mb-1">Nenhum pedido encontrado</p>
+          <p class="text-sm text-gray-400 mb-4">Que tal começar a comprar agora?</p>
+          <button onclick="mostrarTela('catalogo-de-produtos')" class="inline-flex items-center gap-2 bg-marca-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold active:scale-95 transition-transform">Ver catálogo</button>
+        </div>
+      </div>
+
+      <button onclick="meus_pedidos_abrirSuporte()" class="fixed bottom-6 right-5 w-14 h-14 bg-marca-600 rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform z-50 hover:bg-marca-700">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-4.106C3.832 14.564 3.2 13.316 3.2 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+      </button>
+
+      <script>
+        const PEDIDOS = [
+          { id: 'PED-20250115-001', data: '2025-01-15', valor: 289.90, status: 'entregue', itens: [{nome:'Fone Bluetooth Premium', qtd:1, preco:189.90}, {nome:'Capa Silicone Transparente', qtd:2, preco:50.00}], entrega:{endereco:'Rua Augusta, 500 - Consolação, São Paulo - SP', previsao:'15/01/2025', transportadora:'Correios SEDEX'}, pagamento:'Cartão de Crédito **** 4521', timeline:[{status:'Pedido realizado', data:'15/01 09:12', icon:'check'}, {status:'Pagamento confirmado', data:'15/01 09:15', icon:'card'}, {status:'Enviado', data:'15/01 14:30', icon:'truck'}, {status:'Entregue', data:'15/01 17:45', icon:'home'}]},
+          { id: 'PED-20250118-002', data: '2025-01-18', valor: 159.80, status: 'entregue', itens: [{nome:'Carregador Turbo 65W', qtd:1, preco:129.90}, {nome:'Cabo USB-C 2m', qtd:1, preco:29.90}], entrega:{endereco:'Av. Paulista, 1200 - Bela Vista, São Paulo - SP', previsao:'18/01/2025', transportadora:'Loggi'}, pagamento:'PIX', timeline:[{status:'Pedido realizado', data:'18/01 11:05', icon:'check'}, {status:'Pagamento confirmado', data:'18/01 11:06', icon:'card'}, {status:'Enviado', data:'18/01 15:20', icon:'truck'}, {status:'Entregue', data:'18/01 19:10', icon:'home'}]},
+          { id: 'PED-20250122-003', data: '2025-01-22', valor: 449.70, status: 'em-andamento', itens: [{nome:'Smartwatch Fit Pro', qtd:1, preco:349.90}, {nome:'Pulseira Esportiva', qtd:1, preco:49.90}, {nome:'Película 3D Vidro', qtd:2, preco:24.95}], entrega:{endereco:'Rua dos Pinheiros, 300 - Pinheiros, São Paulo - SP', previsao:'24/01/2025', transportadora:'Correios PAC'}, pagamento:'Cartão de Crédito **** 7832', timeline:[{status:'Pedido realizado', data:'22/01 08:45', icon:'check'}, {status:'Pagamento confirmado', data:'22/01 08:48', icon:'card'}, {status:'Em separação', data:'22/01 10:30', icon:'package'}, {status:'Enviado', data:'22/01 16:00', icon:'truck'}]},
+          { id: 'PED-20250125-004', data: '2025-01-25', valor: 79.90, status: 'aguardando', itens: [{nome:'Suporte Celular Mesa', qtd:1, preco:79.90}], entrega:{endereco:'Rua Oscar Freire, 200 - Jardins, São Paulo - SP', previsao:'27/01/2025', transportadora:'Entrega própria'}, pagamento:'PIX (aguardando)', timeline:[{status:'Pedido realizado', data:'25/01 14:22', icon:'check'}]},
+          { id: 'PED-20250128-005', data: '2025-01-28', valor: 1.249, status: 'em-andamento', itens: [{nome:'Tablet Ultra 10" 128GB', qtd:1, preco:1199.00}, {nome:'Capa Teclado Tablet', qtd:1, preco:50.00}], entrega:{endereco:'Av. Rebouças, 1500 - Pinheiros, São Paulo - SP', previsao:'30/01/2025', transportadora:'Transportadora Express'}, pagamento:'Cartão de Crédito **** 4521', timeline:[{status:'Pedido realizado', data:'28/01 10:00', icon:'check'}, {status:'Pagamento confirmado', data:'28/01 10:03', icon:'card'}, {status:'Em separação', data:'28/01 14:00', icon:'package'}]},
+          { id: 'PED-20250201-006', data: '2025-02-01', valor: 339.80, status: 'entregue', itens: [{nome:'Caixa de Som Bluetooth', qtd:1, preco:249.90}, {nome:'Cabo Auxiliar 3.5mm', qtd:2, preco:14.95}], entrega:{endereco:'Rua Haddock Lobo, 420 - Cerqueira César, São Paulo - SP', previsao:'01/02/2025', transportadora:'Loggi'}, pagamento:'Cartão de Débito', timeline:[{status:'Pedido realizado', data:'01/02 16:30', icon:'check'}, {status:'Pagamento confirmado', data:'01/02 16:31', icon:'card'}, {status:'Enviado', data:'02/02 09:00', icon:'truck'}, {status:'Entregue', data:'02/02 14:20', icon:'home'}]},
+          { id: 'PED-20250205-007', data: '2025-02-05', valor: 569.50, status: 'aguardando', itens: [{nome:'Câmera de Segurança Wi-Fi', qtd:2, preco:249.90}, {nome:'Cartão MicroSD 64GB', qtd:1, preco:69.70}], entrega:{endereco:'Rua Joaquim Floriano, 100 - Itaim Bibi, São Paulo - SP', previsao:'07/02/2025', transportadora:'Correios SEDEX'}, pagamento:'Boleto (vencimento 07/02)', timeline:[{status:'Pedido realizado', data:'05/02 11:00', icon:'check'}]},
+          { id: 'PED-20250208-008', data: '2025-02-08', valor: 189.90, status: 'em-andamento', itens: [{nome:'Teclado Mecânico RGB', qtd:1, preco:189.90}], entrega:{endereco:'Alameda Santos, 800 - Paraíso, São Paulo - SP', previsao:'10/02/2025', transportadora:'Transportadora Rápida'}, pagamento:'Cartão de Crédito **** 3456', timeline:[{status:'Pedido realizado', data:'08/02 09:15', icon:'check'}, {status:'Pagamento confirmado', data:'08/02 09:18', icon:'card'}, {status:'Em separação', data:'08/02 15:00', icon:'package'}]}
+        ];
+
+        let filtroAtivo = 'todos';
+        const pedidosExpandidos = new Set();
+
+        function meus_pedidos_statusInfo(status) {
+          const map = {
+            'entregue': { label: 'Entregue', classe: 'bg-emerald-100 text-emerald-700', badgeClasse: 'bg-emerald-100 text-emerald-700' },
+            'em-andamento': { label: 'Em andamento', classe: 'bg-blue-100 text-blue-700', badgeClasse: 'bg-blue-100 text-blue-700' },
+            'aguardando': { label: 'Aguardando pagamento', classe: 'bg-amber-100 text-amber-700', badgeClasse: 'bg-amber-100 text-amber-700' }
+          };
+          return map[status] || { label: status, classe: 'bg-gray-100 text-gray-700', badgeClasse: 'bg-gray-100 text-gray-700' };
+        }
+
+        function meus_pedidos_timelineIcon(type) {
+          const icons = { check:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>', card:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>', truck:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>', home:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>', package:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>' };
+          return icons[type] || icons.check;
+        }
+
+        function meus_pedidos_renderCard(pedido) {
+          const info = meus_pedidos_statusInfo(pedido.status);
+          const expandido = pedidosExpandidos.has(pedido.id);
+          const qtdItens = pedido.itens.reduce((s, i) => s + i.qtd, 0);
+          const resumoItens = pedido.itens.slice(0, 2).map(i => i.nome).join(', ') + (pedido.itens.length > 2 ? '...' : '');
+
+          return '<div class="card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-200 hover:shadow-md cursor-pointer" data-pedido-id="' + pedido.id + '">' +
+            '<div onclick="meus_pedidos_toggleExpand(\'' + pedido.id + '\')" class="p-4">' +
+              '<div class="flex items-start justify-between mb-2.5">' +
+                '<div class="flex-1 min-w-0">' +
+                  '<p class="font-display font-bold text-sm text-gray-900 truncate">' + pedido.id + '</p>' +
+                  '<p class="text-xs text-gray-400 mt-0.5">' + dataBR(pedido.data) + '</p>' +
+                '</div>' +
+                '<span class="shrink-0 ml-2 px-2.5 py-1 rounded-full text-xs font-semibold ' + info.badgeClasse + '">' + info.label + '</span>' +
+              '</div>' +
+              '<div class="flex items-center gap-3 mb-3">' +
+                '<div class="flex -space-x-2">' + pedido.itens.slice(0, 3).map((_, idx) => '<div class="w-8 h-8 rounded-full bg-gray-100 border-2 border-white flex items-center justify-center text-xs font-semibold text-gray-600">' + (idx + 1) + '</div>').join('') + '</div>' +
+                '<p class="text-xs text-gray-500 flex-1 truncate">' + qtdItens + ' ' + (qtdItens === 1 ? 'item' : 'itens') + ' · ' + resumoItens + '</p>' +
+              '</div>' +
+              '<div class="flex items-center justify-between">' +
+                '<p class="font-display font-bold text-base text-gray-900">' + brl(pedido.valor) + '</p>' +
+                '<svg class="w-5 h-5 text-gray-400 transition-transform duration-200 ' + (expandido ? 'rotate-180' : '') + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>' +
+              '</div>' +
+            '</div>' +
+            (expandido ? meus_pedidos_renderDetalhe(pedido) : '') +
+          '</div>';
+        }
+
+        function meus_pedidos_renderDetalhe(pedido) {
+          return '<div class="border-t border-gray-100 bg-gray-50/50 px-4 pb-4 pt-3 animate-fadeIn">' +
+            '<p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Itens do pedido</p>' +
+            pedido.itens.map(i => '<div class="flex justify-between items-center py-2 border-b border-gray-100 last:border-0"><div class="flex items-center gap-2"><span class="text-xs bg-marca-50 text-marca-700 px-2 py-0.5 rounded-full font-medium">x' + i.qtd + '</span><p class="text-sm text-gray-700">' + i.nome + '</p></div><p class="text-sm font-semibold text-gray-900">' + brl(i.preco * i.qtd) + '</p></div>').join('') +
+            '<div class="flex justify-between items-center pt-2 mt-1"><span class="text-sm font-semibold text-gray-700">Total</span><span class="font-display font-bold text-base text-marca-600">' + brl(pedido.valor) + '</span></div>' +
+            '<p class="text-xs text-gray-400 mt-1 mb-3">' + pedido.pagamento + '</p>' +
+            '<p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Linha do tempo</p>' +
+            '<div class="space-y-0">' + pedido.timeline.map((t, idx) => {
+              const isLast = idx === pedido.timeline.length - 1;
+              return '<div class="flex gap-3 ' + (isLast ? '' : 'pb-3') + '">' +
+                '<div class="flex flex-col items-center">' +
+                  '<div class="w-8 h-8 rounded-full ' + (isLast ? 'bg-marca-100 text-marca-600' : 'bg-gray-200 text-gray-500') + ' flex items-center justify-center shrink-0">' + meus_pedidos_timelineIcon(t.icon) + '</div>' +
+                  (isLast ? '' : '<div class="w-0.5 flex-1 bg-gray-200 mt-1"></div>') +
+                '</div>' +
+                '<div class="pt-0.5">' +
+                  '<p class="text-sm font-medium text-gray-800 ' + (isLast ? 'text-marca-700' : '') + '">' + t.status + '</p>' +
+                  '<p class="text-xs text-gray-400">' + t.data + '</p>' +
+                '</div>' +
+              '</div>';
+            }).join('') + '</div>' +
+            '<p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-3 mb-1">Entrega</p>' +
+            '<div class="bg-white rounded-xl p-3 border border-gray-100">' +
+              '<div class="flex items-start gap-2 mb-1"><svg class="w-4 h-4 text-gray-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243A8 8 0 1117.657 16.657z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><p class="text-sm text-gray-700 leading-relaxed">' + pedido.entrega.endereco + '</p></div>' +
+              '<p class="text-xs text-gray-400 ml-6">Previsão: ' + dataBR(pedido.entrega.previsao) + ' · ' + pedido.entrega.transportadora + '</p>' +
+            '</div>' +
+            '<div class="flex gap-2 mt-3">' +
+              '<button onclick="event.stopPropagation(); mostrarTela('confirmacao-do-pedido'); toast('Pedido ' + \'' + pedido.id + '\' carregado', 'info')" class="flex-1 bg-marca-600 text-white py-2.5 rounded-xl text-sm font-semibold active:scale-95 transition-transform">Ver detalhes</button>' +
+              (pedido.status === 'aguardando' ? '<button onclick="event.stopPropagation(); mostrarTela(\'checkout\'); toast(\'Redirecionando para pagamento...\', \'info\')" class="shrink-0 border-2 border-marca-600 text-marca-600 px-4 py-2.5 rounded-xl text-sm font-semibold active:scale-95 transition-transform">Pagar</button>' : '') +
+            '</div>' +
+          '</div>';
+        }
+
+        function meus_pedidos_toggleExpand(id) {
+          if (pedidosExpandidos.has(id)) { pedidosExpandidos.delete(id); }
+          else { pedidosExpandidos.add(id); }
+          meus_pedidos_render();
+        }
+
+        function meus_pedidos_filtrar(filtro) {
+          filtroAtivo = filtro;
+          document.querySelectorAll('.filtro-btn').forEach(btn => {
+            btn.classList.remove('active-filter', 'bg-marca-600', 'text-white');
+            btn.classList.add('bg-gray-100', 'text-gray-600', 'hover:bg-gray-200');
+          });
+          const activeBtn = document.getElementById('filtro-' + filtro);
+          activeBtn.classList.add('active-filter', 'bg-marca-600', 'text-white');
+          activeBtn.classList.remove('bg-gray-100', 'text-gray-600', 'hover:bg-gray-200');
+          meus_pedidos_render();
+        }
+
+        function meus_pedidos_render() {
+          const lista = document.getElementById('lista-pedidos');
+          const empty = document.getElementById('empty-pedidos');
+          let filtrados = PEDIDOS;
+          if (filtroAtivo === 'em-andamento') filtrados = PEDIDOS.filter(p => p.status === 'em-andamento');
+          else if (filtroAtivo === 'entregues') filtrados = PEDIDOS.filter(p => p.status === 'entregue');
+          else if (filtroAtivo === 'aguardando') filtrados = PEDIDOS.filter(p => p.status === 'aguardando');
+
+          if (filtrados.length === 0) { lista.classList.add('hidden'); empty.classList.remove('hidden'); }
+          else { lista.classList.remove('hidden'); empty.classList.add('hidden'); lista.innerHTML = filtrados.map(p => meus_pedidos_renderCard(p)).join(''); }
+          document.getElementById('ind-total').textContent = PEDIDOS.length;
+          document.getElementById('ind-andamento').textContent = PEDIDOS.filter(p => p.status === 'em-andamento').length;
+          document.getElementById('ind-entregues').textContent = PEDIDOS.filter(p => p.status === 'entregue').length;
+        }
+
+        function meus_pedidos_abrirSuporte() {
+          const html = '<div class="text-center py-4">' +
+            '<div class="w-16 h-16 mx-auto mb-3 rounded-full bg-marca-50 flex items-center justify-center"><svg class="w-8 h-8 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-4.106C3.832 14.564 3.2 13.316 3.2 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></div>' +
+            '<p class="font-display font-bold text-gray-900 mb-1">Central de Ajuda</p>' +
+            '<p class="text-sm text-gray-500 mb-4">Como podemos ajudar você?</p>' +
+            '<div class="space-y-2 text-left">' +
+              '<button onclick="fecharModal(); toast(\'Abrindo chat de suporte...\', \'info\'); mostrarTela(\'catalogo-de-produtos\')" class="w-full flex items-center gap-3 p-3 rounded-xl border border-gray-200 hover:border-marca-300 hover:bg-marca-50 transition-colors"><div class="w-10 h-10 rounded-full bg-marca-100 flex items-center justify-center shrink-0"><svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-4.106C3.832 14.564 3.2 13.316 3.2 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></div><div><p class="text-sm font-semibold text-gray-800">Chat ao vivo</p><p class="text-xs text-gray-400">Atendimento em até 5 min</p></div></button>' +
+              '<button onclick="fecharModal(); toast(\'Abrindo FAQ...\', \'info\'); mostrarTela(\'catalogo-de-produtos\')" class="w-full flex items-center gap-3 p-3 rounded-xl border border-gray-200 hover:border-marca-300 hover:bg-marca-50 transition-colors"><div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0"><svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div><p class="text-sm font-semibold text-gray-800">Perguntas frequentes</p><p class="text-xs text-gray-400">Encontre respostas rápidas</p></div></button>' +
+              '<button onclick="fecharModal(); toast(\'Ligando para (11) 99999-1234\', \'info\')" class="w-full flex items-center gap-3 p-3 rounded-xl border border-gray-200 hover:border-marca-300 hover:bg-marca-50 transition-colors"><div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center shrink-0"><svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div><div><p class="text-sm font-semibold text-gray-800">Ligar para suporte</p><p class="text-xs text-gray-400">Seg-Sex, 8h às 18h</p></div></button>' +
+            '</div>' +
+          '</div>';
+          abrirModal(html, 'Suporte');
+        }
+
+        meus_pedidos_filtrar('todos');
+      </script>
+    </section>
+
     <!-- TELAS -->
     </main>
 
