@@ -469,6 +469,265 @@
       </script>
     </section>
 
+    <section data-tela="detalhe-do-produto" class="hidden">
+  <div class="fade-in">
+    <div class="relative">
+      <div id="detalhe_do_produto_carrossel" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar" style="scrollbar-width:none;-ms-overflow-style:none;">
+        <div class="min-w-full snap-center flex-shrink-0 h-80 flex items-center justify-center" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);">
+          <div class="text-center text-white">
+            <svg class="w-28 h-28 mx-auto mb-3 opacity-80" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><circle cx="12" cy="18" r="1.5"/></svg>
+            <p class="text-sm font-body opacity-70">Smartphone Titan X12</p>
+          </div>
+        </div>
+        <div class="min-w-full snap-center flex-shrink-0 h-80 flex items-center justify-center" style="background:linear-gradient(135deg,#1e3a5f,#3b82f6);">
+          <div class="text-center text-white">
+            <svg class="w-28 h-28 mx-auto mb-3 opacity-80" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="10" y1="4" x2="10" y2="10"/></svg>
+            <p class="text-sm font-body opacity-70">Tela frontal</p>
+          </div>
+        </div>
+        <div class="min-w-full snap-center flex-shrink-0 h-80 flex items-center justify-center" style="background:linear-gradient(135deg,#1e40af,#60a5fa);">
+          <div class="text-center text-white">
+            <svg class="w-28 h-28 mx-auto mb-3 opacity-80" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="8" cy="12" r="2"/><path d="M14 10h4M14 14h2"/></svg>
+            <p class="text-sm font-body opacity-70">Câmera traseira</p>
+          </div>
+        </div>
+      </div>
+      <div class="absolute top-3 left-3">
+        <button onclick="mostrarTela('catalogo-de-produtos')" class="w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-md active:scale-90 transition-transform">
+          <svg class="w-5 h-5 text-marca-800" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+      </div>
+      <button id="detalhe_btn_favorito" onclick="detalhe_do_produto_toggle_favorito()" class="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-md active:scale-90 transition-transform">
+        <svg class="w-5 h-5 text-gray-400" id="detalhe_icone_favorito" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <div class="flex justify-center gap-1.5 mt-3">
+        <span class="detalhe-dot w-2 h-2 rounded-full bg-marca-500 transition-all"></span>
+        <span class="detalhe-dot w-2 h-2 rounded-full bg-gray-300 transition-all"></span>
+        <span class="detalhe-dot w-2 h-2 rounded-full bg-gray-300 transition-all"></span>
+      </div>
+    </div>
+
+    <div class="px-4 pt-4 pb-48">
+      <h1 class="font-display text-xl font-bold text-gray-900 leading-tight">Smartphone Titan X12 256GB — Tela AMOLED 6.7" 5G</h1>
+      <p class="text-sm text-gray-500 font-body mt-1">Ref: SP-TX12-256-BK</p>
+
+      <div class="flex items-center gap-2 mt-3">
+        <div class="flex items-center gap-0.5">
+          <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <span class="text-sm font-semibold text-gray-800 font-body">4.8</span>
+        <span class="text-sm text-gray-500 font-body">(127 avaliações)</span>
+      </div>
+
+      <div class="mt-4 pb-3 border-b border-gray-100">
+        <div class="flex items-end gap-3">
+          <span class="font-display text-3xl font-bold text-gray-900">R$ 2.899</span>
+          <span class="text-base text-gray-400 line-through font-body">R$ 3.499</span>
+          <span class="badge bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">Pix: R$ 2.599</span>
+        </div>
+        <p class="text-xs text-green-600 font-body mt-1.5 flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+          Economia de R$ 900 com Pix à vista
+        </p>
+        <p class="text-xs text-gray-400 font-body mt-0.5">ou 12x de R$ 241,58 sem juros</p>
+      </div>
+
+      <div class="mt-5">
+        <label class="text-sm font-semibold text-gray-800 font-display block mb-2">Cor</label>
+        <div class="flex gap-2" id="detalhe_cores">
+          <button onclick="detalhe_do_produto_selecionar_cor(this,'preto')" class="detalhe-cor-btn px-4 py-2.5 rounded-xl border-2 border-marca-500 bg-marca-50 text-sm font-semibold font-body text-gray-800 active:scale-95 transition-all" data-cor="preto">
+            <span class="inline-block w-3.5 h-3.5 rounded-full bg-gray-900 mr-1.5 align-middle"></span>Preto
+          </button>
+          <button onclick="detalhe_do_produto_selecionar_cor(this,'branco')" class="detalhe-cor-btn px-4 py-2.5 rounded-xl border-2 border-gray-200 bg-white text-sm font-semibold font-body text-gray-600 active:scale-95 transition-all" data-cor="branco">
+            <span class="inline-block w-3.5 h-3.5 rounded-full bg-gray-100 border border-gray-300 mr-1.5 align-middle"></span>Branco
+          </button>
+          <button onclick="detalhe_do_produto_selecionar_cor(this,'azul')" class="detalhe-cor-btn px-4 py-2.5 rounded-xl border-2 border-gray-200 bg-white text-sm font-semibold font-body text-gray-600 active:scale-95 transition-all" data-cor="azul">
+            <span class="inline-block w-3.5 h-3.5 rounded-full bg-blue-600 mr-1.5 align-middle"></span>Azul
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-5">
+        <label class="text-sm font-semibold text-gray-800 font-display block mb-2">Tamanho</label>
+        <div class="flex gap-2" id="detalhe_tamanhos">
+          <button onclick="detalhe_do_produto_selecionar_tamanho(this,'p')" class="detalhe-tam-btn px-5 py-2.5 rounded-xl border-2 border-gray-200 bg-white text-sm font-semibold font-body text-gray-600 active:scale-95 transition-all">P</button>
+          <button onclick="detalhe_do_produto_selecionar_tamanho(this,'m')" class="detalhe-tam-btn px-5 py-2.5 rounded-xl border-2 border-marca-500 bg-marca-50 text-sm font-semibold font-body text-gray-800 active:scale-95 transition-all" data-tam="m">M</button>
+          <button onclick="detalhe_do_produto_selecionar_tamanho(this,'g')" class="detalhe-tam-btn px-5 py-2.5 rounded-xl border-2 border-gray-200 bg-white text-sm font-semibold font-body text-gray-600 active:scale-95 transition-all" data-tam="g">G</button>
+        </div>
+      </div>
+
+      <div class="mt-5">
+        <label class="text-sm font-semibold text-gray-800 font-display block mb-2">Quantidade</label>
+        <div class="flex items-center gap-3">
+          <button onclick="detalhe_do_produto_alterar_quantidade(-1)" class="w-10 h-10 rounded-xl border-2 border-gray-200 bg-white flex items-center justify-center active:scale-90 transition-all">
+            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14"/></svg>
+          </button>
+          <span id="detalhe_quantidade" class="text-lg font-bold font-display text-gray-900 w-8 text-center">1</span>
+          <button onclick="detalhe_do_produto_alterar_quantidade(1)" class="w-10 h-10 rounded-xl border-2 border-gray-200 bg-white flex items-center justify-center active:scale-90 transition-all">
+            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <span class="text-xs text-gray-400 font-body ml-2">Máx. 10 un.</span>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-2">Descrição do Produto</h2>
+        <p class="text-sm text-gray-600 font-body leading-relaxed">
+          O Smartphone Titan X12 combina desempenho e elegância em um design premium. Equipado com processador octa-core de última geração, 8GB de RAM e 256GB de armazenamento interno, ele oferece velocidade e espaço de sobra para suas demandas diárias. A tela AMOLED de 6.7 polegadas com taxa de atualização de 120Hz proporciona cores vibrantes e imagens incrivelmente nítidas.
+        </p>
+        <div class="mt-4">
+          <h3 class="text-sm font-semibold text-gray-800 font-display mb-2">Especificações Técnicas</h3>
+          <div class="bg-gray-50 rounded-xl p-4 space-y-2">
+            <div class="flex justify-between text-sm"><span class="text-gray-500 font-body">Tela</span><span class="text-gray-800 font-body font-medium">6.7" AMOLED 120Hz</span></div>
+            <div class="flex justify-between text-sm"><span class="text-gray-500 font-body">Processador</span><span class="text-gray-800 font-body font-medium">Octa-core 2.8GHz</span></div>
+            <div class="flex justify-between text-sm"><span class="text-gray-500 font-body">Memória RAM</span><span class="text-gray-800 font-body font-medium">8GB</span></div>
+            <div class="flex justify-between text-sm"><span class="text-gray-500 font-body">Armazenamento</span><span class="text-gray-800 font-body font-medium">256GB</span></div>
+            <div class="flex justify-between text-sm"><span class="text-gray-500 font-body">Câmera Principal</span><span class="text-gray-800 font-body font-medium">108MP + 12MP + 5MP</span></div>
+            <div class="flex justify-between text-sm"><span class="text-gray-500 font-body">Bateria</span><span class="text-gray-800 font-body font-medium">5000mAh / 67W</span></div>
+            <div class="flex justify-between text-sm"><span class="text-gray-500 font-body">Sistema</span><span class="text-gray-800 font-body font-medium">Android 15</span></div>
+            <div class="flex justify-between text-sm"><span class="text-gray-500 font-body">Conectividade</span><span class="text-gray-800 font-body font-medium">5G / Wi-Fi 7 / NFC</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-3">Avaliações de Clientes</h2>
+        <div class="space-y-3">
+          <div class="card p-3">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-8 h-8 rounded-full bg-marca-100 flex items-center justify-center text-xs font-bold text-marca-700 font-body">MC</div>
+              <div><p class="text-sm font-semibold text-gray-800 font-body">Maria Costa</p><p class="text-xs text-gray-400 font-body">Compra verificada</p></div>
+            </div>
+            <div class="flex items-center gap-0.5 mb-1">
+              <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <p class="text-sm text-gray-600 font-body">Celular excelente! A câmera surpreende e a bateria dura o dia todo. Entrega super rápida.</p>
+            <p class="text-xs text-gray-400 font-body mt-1">Há 3 dias</p>
+          </div>
+          <div class="card p-3">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-xs font-bold text-amber-700 font-body">RS</div>
+              <div><p class="text-sm font-semibold text-gray-800 font-body">Roberto Silva</p><p class="text-xs text-gray-400 font-body">Compra verificada</p></div>
+            </div>
+            <div class="flex items-center gap-0.5 mb-1">
+              <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-3 h-3 text-gray-300 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <p class="text-sm text-gray-600 font-body">Tela muito boa e o celular é rápido. Único ponto é que esquenta um pouco em jogos.</p>
+            <p class="text-xs text-gray-400 font-body mt-1">Há 1 semana</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.06)]" style="max-width:430px;margin:0 auto;">
+      <div class="px-4 py-3 flex gap-2.5">
+        <button onclick="detalhe_do_produto_abrir_orcamento()" class="flex-1 py-3.5 rounded-2xl border-2 border-marca-200 bg-white text-marca-700 font-display font-semibold text-sm active:scale-95 transition-all hover:bg-marca-50">Solicitar Orçamento</button>
+        <button onclick="detalhe_do_produto_adicionar_carrinho()" class="flex-[2] py-3.5 rounded-2xl bg-marca-500 text-white font-display font-semibold text-sm active:scale-95 transition-all hover:bg-marca-600 shadow-md shadow-marca-500/25 flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          Adicionar ao Carrinho
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function(){
+    var carrossel = document.getElementById('detalhe_do_produto_carrossel');
+    var dots = document.querySelectorAll('.detalhe-dot');
+    var selectedCor = 'preto';
+    var selectedTam = 'm';
+    var quantidade = 1;
+    var favorito = false;
+
+    if (carrossel) {
+      carrossel.addEventListener('scroll', function(){
+        var idx = Math.round(carrossel.scrollLeft / carrossel.clientWidth);
+        dots.forEach(function(d,i){ d.classList.toggle('bg-marca-500', i===idx); d.classList.toggle('bg-gray-300', i!==idx); });
+      });
+    }
+
+    window.detalhe_do_produto_selecionar_cor = function(btn, cor){
+      selectedCor = cor;
+      document.querySelectorAll('#detalhe_cores .detalhe-cor-btn').forEach(function(b){
+        b.classList.remove('border-marca-500','bg-marca-50','text-gray-800');
+        b.classList.add('border-gray-200','bg-white','text-gray-600');
+      });
+      btn.classList.remove('border-gray-200','bg-white','text-gray-600');
+      btn.classList.add('border-marca-500','bg-marca-50','text-gray-800');
+    };
+
+    window.detalhe_do_produto_selecionar_tamanho = function(btn, tam){
+      selectedTam = tam;
+      document.querySelectorAll('#detalhe_tamanhos .detalhe-tam-btn').forEach(function(b){
+        b.classList.remove('border-marca-500','bg-marca-50','text-gray-800');
+        b.classList.add('border-gray-200','bg-white','text-gray-600');
+      });
+      btn.classList.remove('border-gray-200','bg-white','text-gray-600');
+      btn.classList.add('border-marca-500','bg-marca-50','text-gray-800');
+    };
+
+    window.detalhe_do_produto_alterar_quantidade = function(delta){
+      quantidade = Math.max(1, Math.min(10, quantidade + delta));
+      document.getElementById('detalhe_quantidade').textContent = quantidade;
+    };
+
+    window.detalhe_do_produto_toggle_favorito = function(){
+      favorito = !favorito;
+      var icone = document.getElementById('detalhe_icone_favorito');
+      if (favorito) { icone.classList.add('text-red-500','fill-current'); icone.classList.remove('text-gray-400','fill-none'); toast('Adicionado aos favoritos!','ok'); }
+      else { icone.classList.remove('text-red-500','fill-current'); icone.classList.add('text-gray-400','fill-none'); toast('Removido dos favoritos','info'); }
+    };
+
+    window.detalhe_do_produto_adicionar_carrinho = function(){
+      var corLabel = selectedCor.charAt(0).toUpperCase()+selectedCor.slice(1);
+      var tamLabel = selectedTam.toUpperCase();
+      var precoUn = 2899;
+      var total = precoUn * quantidade;
+      var item = { nome:'Smartphone Titan X12 256GB', cor:corLabel, tamanho:tamLabel, quantidade:quantidade, preco:precoUn, subtotal:total, imagem:'gradiente azul' };
+      var carrinho = JSON.parse(localStorage.getItem('bluecircuit_carrinho')||'[]');
+      var existente = carrinho.find(function(i){ return i.nome===item.nome && i.cor===item.cor && i.tamanho===item.tamanho; });
+      if (existente) { existente.quantidade = Math.min(10, existente.quantidade + item.quantidade); existente.subtotal = existente.preco * existente.quantidade; }
+      else { carrinho.push(item); }
+      localStorage.setItem('bluecircuit_carrinho', JSON.stringify(carrinho));
+      toast(item.quantidade+'x '+item.nome+' ('+corLabel+'/'+tamLabel+') adicionado(s)!','ok');
+      setTimeout(function(){ mostrarTela('carrinho-de-compras'); }, 600);
+    };
+
+    window.detalhe_do_produto_abrir_orcamento = function(){
+      var html = '<div class="space-y-3">'
+        +'<p class="text-sm text-gray-600 font-body">Preencha os dados abaixo para receber um orçamento personalizado:</p>'
+        +'<div><label class="text-xs font-semibold text-gray-700 font-body block mb-1">Nome completo</label><input id="orc_nome" type="text" placeholder="Seu nome" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm font-body focus:border-marca-400 focus:ring-1 focus:ring-marca-400 outline-none transition-all"></div>'
+        +'<div><label class="text-xs font-semibold text-gray-700 font-body block mb-1">E-mail</label><input id="orc_email" type="email" placeholder="seu@email.com" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm font-body focus:border-marca-400 focus:ring-1 focus:ring-marca-400 outline-none transition-all"></div>'
+        +'<div><label class="text-xs font-semibold text-gray-700 font-body block mb-1">WhatsApp</label><input id="orc_whats" type="tel" placeholder="(11) 99999-9999" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm font-body focus:border-marca-400 focus:ring-1 focus:ring-marca-400 outline-none transition-all"></div>'
+        +'<div><label class="text-xs font-semibold text-gray-700 font-body block mb-1">Observações</label><textarea id="orc_obs" rows="2" placeholder="Quantidade desejada, especificações adicionais..." class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm font-body focus:border-marca-400 focus:ring-1 focus:ring-marca-400 outline-none transition-all resize-none"></textarea></div>'
+        +'<button onclick="detalhe_do_produto_enviar_orcamento()" class="w-full py-3 rounded-xl bg-marca-500 text-white font-display font-semibold text-sm active:scale-95 transition-all hover:bg-marca-600">Enviar Solicitação de Orçamento</button>'
+        +'</div>';
+      abrirModal(html, 'Solicitar Orçamento');
+    };
+
+    window.detalhe_do_produto_enviar_orcamento = function(){
+      var nome = document.getElementById('orc_nome').value.trim();
+      var email = document.getElementById('orc_email').value.trim();
+      if (!nome || !email) { toast('Preencha nome e e-mail.','erro'); return; }
+      fecharModal();
+      toast('Orçamento solicitado! Entraremos em contato em até 24h.','ok');
+    };
+  })();
+</script>
+
     <!-- TELAS -->
     </main>
 
